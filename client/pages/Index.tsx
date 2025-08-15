@@ -408,52 +408,65 @@ export default function Index() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto">
-            {products.map((product, index) => (
-              <div
-                key={product.id}
-                className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300"
-              >
-                <div className="aspect-square overflow-hidden relative">
-                  <img
-                    src={`${product.image}&quality=85`}
-                    alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
-                    className="w-full h-full object-cover image-hover"
-                    loading="lazy"
-                    width="300"
-                    height="300"
-                  />
-                  {index === 1 && (
-                    <div className="absolute top-3 right-3 bg-logo-green text-white px-2 py-1 rounded-full text-xs font-bold">
-                      Popular
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-3">
-                  <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-600 mb-2 line-clamp-2 leading-relaxed text-xs">
-                    {product.description}
-                  </p>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-lg font-bold text-heading-red">
-                      {product.price}
-                    </span>
-                    <span className="text-xs text-white font-semibold bg-logo-green px-2 py-0.5 rounded-full">
-                      {product.size}
-                    </span>
+            {products.map((product, index) => {
+              const pricing = calculatePricing(product.price);
+              return (
+                <div
+                  key={product.id}
+                  className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300"
+                >
+                  <div className="aspect-square overflow-hidden relative">
+                    <img
+                      src={`${product.image}&quality=85`}
+                      alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
+                      className="w-full h-full object-cover image-hover"
+                      loading="lazy"
+                      width="300"
+                      height="300"
+                    />
+                    {index === 1 && (
+                      <div className="absolute top-3 right-3 bg-logo-green text-white px-2 py-1 rounded-full text-xs font-bold">
+                        Popular
+                      </div>
+                    )}
                   </div>
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="w-full bg-logo-green hover:bg-green-500 text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1"
-                  >
-                    <Package className="w-3 h-3" />
-                    Open Your Box
-                  </button>
+
+                  <div className="p-3">
+                    <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
+                      {product.name}
+                    </h3>
+                    <p className="text-gray-600 mb-2 line-clamp-2 leading-relaxed text-xs">
+                      {product.description}
+                    </p>
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-heading-red">
+                            {pricing.salePrice}
+                          </span>
+                          <span className="text-sm text-gray-500 line-through">
+                            {pricing.regularPrice}
+                          </span>
+                        </div>
+                        <span className="text-xs text-red-600 font-semibold">
+                          Save {((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0)}%
+                        </span>
+                      </div>
+                      <span className="text-xs text-white font-semibold bg-logo-green px-2 py-0.5 rounded-full">
+                        {product.size}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setSelectedProduct(product)}
+                      className="w-full bg-logo-green hover:bg-green-500 text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1"
+                    >
+                      <Package className="w-3 h-3" />
+                      Open Your Box
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
