@@ -610,8 +610,8 @@ export default function Index() {
                       </span>
                     </div>
                     <div className="w-full bg-logo-green text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 group-hover:bg-green-500 transition-colors">
-                      <Package className="w-3 h-3" />
-                      Open Your Box
+                      <ShoppingCart className="w-3 h-3" />
+                      Buy from Walmart
                     </div>
                   </div>
                 </div>
