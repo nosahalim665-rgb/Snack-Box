@@ -40,6 +40,25 @@ const calculatePricing = (salePrice: string) => {
   };
 };
 
+// Star Rating Component
+const StarRating = ({ rating, reviewCount }: { rating: number; reviewCount?: number }) => {
+  return (
+    <div className="flex items-center gap-1">
+      <div className="flex">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+          />
+        ))}
+      </div>
+      {reviewCount && (
+        <span className="text-sm text-gray-600 ml-1">({reviewCount})</span>
+      )}
+    </div>
+  );
+};
+
 const products = [
   {
     id: 1,
