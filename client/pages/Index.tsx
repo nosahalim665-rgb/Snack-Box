@@ -288,10 +288,10 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-blue-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-100 via-white to-blue-50 py-12 px-4 sm:py-20">
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-100 via-white to-blue-50 py-6 px-4 sm:py-20">
         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-8 items-center">
             {/* Content */}
             <div className="text-center lg:text-left fade-in">
               {/* Logo with frame */}
