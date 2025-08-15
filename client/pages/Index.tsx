@@ -15,11 +15,12 @@ import AutoScrollCarousel from "../components/AutoScrollCarousel";
 
 // Helper function to calculate pricing
 const calculatePricing = (salePrice: string) => {
-  const numericPrice = parseFloat(salePrice.replace('$', ''));
-  const regularPrice = numericPrice / 0.3; // Since salePrice = regularPrice * 0.3, then regularPrice = salePrice / 0.3
+  const salePriceNumeric = parseFloat(salePrice.replace('$', ''));
+  // Following the formula: regularPrice = salePrice / 0.3 (since salePrice = regularPrice * 0.3)
+  const regularPriceNumeric = salePriceNumeric / 0.3;
   return {
     salePrice: salePrice,
-    regularPrice: `$${regularPrice.toFixed(2)}`
+    regularPrice: `$${regularPriceNumeric.toFixed(2)}`
   };
 };
 
