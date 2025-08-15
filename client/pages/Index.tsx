@@ -936,6 +936,38 @@ export default function Index() {
                   </div>
                 </div>
 
+                {/* Buy from Walmart Button - Prominent placement below price */}
+                <div className="mb-6">
+                  <a
+                    href={selectedProduct.walmartLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 text-center rounded-xl text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] flex items-center justify-center gap-3 relative overflow-hidden"
+                  >
+                    {/* Button glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-600/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <ShoppingCart className="w-5 h-5 relative z-10" />
+                    <span className="relative z-10">Buy from Walmart</span>
+                    <ExternalLink className="w-4 h-4 relative z-10" />
+                  </a>
+
+                  {/* Trust indicators below main CTA */}
+                  <div className="flex items-center justify-center gap-4 mt-3 text-xs text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Fast Shipping
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Secure Payment
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Easy Returns
+                    </div>
+                  </div>
+                </div>
+
                 {/* Product Description - Always Visible */}
                 <div className="bg-snack-light-gray/50 p-4 rounded-xl mb-4 border border-gray-200">
                   <div className="flex items-center gap-2 mb-3">
