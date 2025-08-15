@@ -518,18 +518,14 @@ export default function Index() {
               <div className="flex gap-4 w-max">
                 {products.map((product, index) => {
                   const pricing = calculatePricing(product.price);
-                  const isExpanded = expandedDetails[product.id] || false;
 
                   return (
                     <div
                       key={product.id}
-                      className="card-enhanced overflow-hidden group transition-all duration-300 w-[280px] flex-shrink-0"
+                      className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300 cursor-pointer w-[280px] flex-shrink-0 active:scale-95"
                     >
-                      {/* Product Image - Clickable to open modal */}
-                      <div
-                        className="aspect-square overflow-hidden relative cursor-pointer"
-                        onClick={() => setSelectedProduct(product)}
-                      >
+                      {/* Product Image */}
+                      <div className="aspect-square overflow-hidden relative">
                         <img
                           src={`${product.image}&quality=85`}
                           alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
@@ -543,17 +539,11 @@ export default function Index() {
                             Popular
                           </div>
                         )}
-                        {/* Mobile tap indicator */}
-                        <div className="absolute inset-0 bg-black/0 hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
-                          <div className="bg-white/90 p-2 rounded-full">
-                            <Eye className="w-4 h-4 text-gray-800" />
-                          </div>
-                        </div>
                       </div>
 
                       <div className="p-4">
                         {/* Product Title */}
-                        <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2">
+                        <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
                           {product.shortName || product.name} ({product.size})
                         </h3>
 
@@ -593,67 +583,22 @@ export default function Index() {
 
                         {/* Short Description Preview */}
                         <div className="mb-3">
-                          <p className="text-xs text-gray-600 leading-relaxed">
+                          <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">
                             {product.description}
                           </p>
                         </div>
 
-                        {/* Expandable Details Section */}
-                        {isExpanded && (
-                          <div className="mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <h6 className="text-xs font-semibold text-heading-red mb-2 flex items-center gap-1">
-                              <Sparkles className="w-3 h-3" />
-                              Product Details
-                            </h6>
-                            <ul className="space-y-1 text-xs text-gray-700">
-                              {product.bulletPoints.map((point, pointIndex) => (
-                                <li key={pointIndex} className="flex items-start gap-2">
-                                  <span className="text-logo-green font-bold text-sm leading-none mt-0.5 flex-shrink-0">•</span>
-                                  <span className="leading-relaxed">{point}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-
-                        {/* Action Buttons */}
-                        <div className="space-y-2">
-                          {/* View Details Toggle Button */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setExpandedDetails(prev => ({
-                                ...prev,
-                                [product.id]: !prev[product.id]
-                              }));
-                            }}
-                            className="w-full bg-logo-green/10 text-logo-green font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1 border border-logo-green/30 hover:bg-logo-green/20 transition-colors"
-                          >
-                            {isExpanded ? (
-                              <>
-                                <ChevronDown className="w-3 h-3 rotate-180 transition-transform" />
-                                Hide Details
-                              </>
-                            ) : (
-                              <>
-                                <ChevronDown className="w-3 h-3 transition-transform" />
-                                View Details
-                              </>
-                            )}
-                          </button>
-
-                          {/* Buy Now Button */}
-                          <a
-                            href={product.walmartLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="block w-full bg-logo-green text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1 hover:bg-green-500 transition-colors"
-                          >
-                            <ShoppingCart className="w-3 h-3" />
-                            Buy on Walmart
-                          </a>
-                        </div>
+                        {/* View Details Button - Opens Modal */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProduct(product);
+                          }}
+                          className="w-full bg-logo-green/10 text-logo-green font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1 border border-logo-green/30 hover:bg-logo-green/20 transition-colors"
+                        >
+                          <Package className="w-3 h-3" />
+                          View Details
+                        </button>
                       </div>
                     </div>
                   );
