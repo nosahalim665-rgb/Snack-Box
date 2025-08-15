@@ -27,7 +27,7 @@ import AutoScrollCarousel from "../components/AutoScrollCarousel";
 
 // Helper function to calculate pricing
 const calculatePricing = (salePrice: string) => {
-  const salePriceNumeric = parseFloat(salePrice.replace('$', ''));
+  const salePriceNumeric = parseFloat(salePrice.replace("$", ""));
   // Following the formula: regularPrice = salePrice / 0.3 (since salePrice = regularPrice * 0.3)
   const regularPriceCalculated = salePriceNumeric / 0.3;
 
@@ -36,12 +36,18 @@ const calculatePricing = (salePrice: string) => {
 
   return {
     salePrice: salePrice,
-    regularPrice: `$${regularPriceRounded.toFixed(2)}`
+    regularPrice: `$${regularPriceRounded.toFixed(2)}`,
   };
 };
 
 // Star Rating Component
-const StarRating = ({ rating, reviewCount }: { rating: number; reviewCount?: number }) => {
+const StarRating = ({
+  rating,
+  reviewCount,
+}: {
+  rating: number;
+  reviewCount?: number;
+}) => {
   return (
     <div className="flex items-center gap-1">
       <div className="flex">
@@ -81,8 +87,8 @@ const products = [
       "Spread joy with the perfect gift for adults, teens, and college students.",
       "Variety assortment of chips, crackers, cookies, and candy.",
       "Honesty is our main value - some snacks may be replaced for similar or more value.",
-      "Gift a Snack - the ultimate snack box for any occasion."
-    ]
+      "Gift a Snack - the ultimate snack box for any occasion.",
+    ],
   },
   {
     id: 2,
@@ -104,8 +110,8 @@ const products = [
       "Comes with a heartwarming greeting card and high-end packaging.",
       "Ideal for adults, teens, and college students, and suitable for on-the-go snacking.",
       "Some snacks may be replaced with similar or higher value items.",
-      "Perfect as a care package or a convenient snack option."
-    ]
+      "Perfect as a care package or a convenient snack option.",
+    ],
   },
   {
     id: 3,
@@ -129,8 +135,8 @@ const products = [
       "Variety assortment of chips, crackers, cookies, and candy.",
       "Honesty is our main value - some snacks may be replaced for similar or more value.",
       "Gift a Snack - the ultimate snack box for any occasion.",
-      "Mouthwatering treats inside - Airheads, Cheez It, Famous Amos, and more!"
-    ]
+      "Mouthwatering treats inside - Airheads, Cheez It, Famous Amos, and more!",
+    ],
   },
   {
     id: 4,
@@ -150,8 +156,8 @@ const products = [
     bulletPoints: [
       "105-count pack with America's favorite candies, chips, crackers, and bars.",
       "Perfectly packaged in individual servings for on-the-go ease.",
-      "Ideal gift for adults, teens, college students, or anyone who deserves a treat."
-    ]
+      "Ideal gift for adults, teens, college students, or anyone who deserves a treat.",
+    ],
   },
 ];
 
@@ -517,7 +523,12 @@ export default function Index() {
               <div className="flex gap-6 w-max">
                 {products.map((product, index) => {
                   const pricing = calculatePricing(product.price);
-                  const savingsPercent = ((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0);
+                  const savingsPercent = (
+                    ((parseFloat(pricing.regularPrice.replace("$", "")) -
+                      parseFloat(pricing.salePrice.replace("$", ""))) /
+                      parseFloat(pricing.regularPrice.replace("$", ""))) *
+                    100
+                  ).toFixed(0);
 
                   return (
                     <div
@@ -551,7 +562,9 @@ export default function Index() {
                         {product.outOfStock && (
                           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                             <div className="bg-white px-4 py-2 rounded-full">
-                              <span className="text-red-600 font-bold text-sm">Out of Stock</span>
+                              <span className="text-red-600 font-bold text-sm">
+                                Out of Stock
+                              </span>
                             </div>
                           </div>
                         )}
@@ -569,7 +582,9 @@ export default function Index() {
                           <span className="text-lg">🍪</span>
                           <span className="text-lg">🍫</span>
                           <span className="text-lg">🥨</span>
-                          <span className="text-xs text-gray-500 ml-2">{product.size} items</span>
+                          <span className="text-xs text-gray-500 ml-2">
+                            {product.size} items
+                          </span>
                         </div>
 
                         {/* Price Section - Prominent */}
@@ -583,14 +598,22 @@ export default function Index() {
                             </span>
                           </div>
                           <div className="text-sm font-bold text-green-600">
-                            Save ${(parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))).toFixed(2)}
+                            Save $
+                            {(
+                              parseFloat(
+                                pricing.regularPrice.replace("$", ""),
+                              ) - parseFloat(pricing.salePrice.replace("$", ""))
+                            ).toFixed(2)}
                           </div>
                         </div>
 
                         {/* Ratings */}
                         {product.rating && (
                           <div className="mb-4">
-                            <StarRating rating={product.rating} reviewCount={product.reviewCount} />
+                            <StarRating
+                              rating={product.rating}
+                              reviewCount={product.reviewCount}
+                            />
                           </div>
                         )}
 
@@ -613,7 +636,9 @@ export default function Index() {
             </div>
             {/* Scroll indicator */}
             <div className="text-center mt-4">
-              <span className="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-full">← Swipe to see more boxes →</span>
+              <span className="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-full">
+                ← Swipe to see more boxes →
+              </span>
             </div>
           </div>
 
@@ -621,7 +646,12 @@ export default function Index() {
           <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
             {products.map((product, index) => {
               const pricing = calculatePricing(product.price);
-              const savingsPercent = ((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0);
+              const savingsPercent = (
+                ((parseFloat(pricing.regularPrice.replace("$", "")) -
+                  parseFloat(pricing.salePrice.replace("$", ""))) /
+                  parseFloat(pricing.regularPrice.replace("$", ""))) *
+                100
+              ).toFixed(0);
 
               return (
                 <div
@@ -655,7 +685,9 @@ export default function Index() {
                     {product.outOfStock && (
                       <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                         <div className="bg-white px-3 py-1.5 rounded-full">
-                          <span className="text-red-600 font-bold text-xs">Out of Stock</span>
+                          <span className="text-red-600 font-bold text-xs">
+                            Out of Stock
+                          </span>
                         </div>
                       </div>
                     )}
@@ -673,7 +705,9 @@ export default function Index() {
                       <span className="text-sm">🍪</span>
                       <span className="text-sm">🍫</span>
                       <span className="text-sm">🥨</span>
-                      <span className="text-xs text-gray-500 ml-2">{product.size}</span>
+                      <span className="text-xs text-gray-500 ml-2">
+                        {product.size}
+                      </span>
                     </div>
 
                     {/* Price Section - Prominent */}
@@ -687,14 +721,21 @@ export default function Index() {
                         </span>
                       </div>
                       <div className="text-xs lg:text-sm font-bold text-green-600">
-                        Save ${(parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))).toFixed(2)}
+                        Save $
+                        {(
+                          parseFloat(pricing.regularPrice.replace("$", "")) -
+                          parseFloat(pricing.salePrice.replace("$", ""))
+                        ).toFixed(2)}
                       </div>
                     </div>
 
                     {/* Ratings */}
                     {product.rating && (
                       <div className="mb-3">
-                        <StarRating rating={product.rating} reviewCount={product.reviewCount} />
+                        <StarRating
+                          rating={product.rating}
+                          reviewCount={product.reviewCount}
+                        />
                       </div>
                     )}
 
@@ -990,7 +1031,7 @@ export default function Index() {
           <div
             className="bg-white rounded-t-3xl lg:rounded-3xl w-full lg:max-w-5xl xl:max-w-6xl max-h-[95vh] lg:max-h-[85vh] overflow-hidden shadow-2xl slide-up border-t-2 lg:border border-logo-green/20 relative"
             style={{
-              animation: 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+              animation: "slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -1021,7 +1062,6 @@ export default function Index() {
 
             {/* Content Area - Optimized Layout */}
             <div className="flex flex-col lg:grid lg:grid-cols-12 h-full overflow-hidden">
-
               {/* Top Section - Always Visible (Mobile) / Left Section (Desktop) */}
               <div className="lg:col-span-6 flex flex-col">
                 {/* Product Image - Further Reduced for Better Balance */}
@@ -1064,10 +1104,8 @@ export default function Index() {
 
               {/* Right Section - Product Info & CTA */}
               <div className="lg:col-span-6 flex flex-col">
-
                 {/* Top Product Info - Always Visible */}
                 <div className="flex-shrink-0 p-4 lg:p-6 bg-white border-b lg:border-b-0 lg:bg-gradient-to-b lg:from-white lg:to-gray-50">
-
                   {/* Product Name */}
                   <div className="mb-3">
                     <h4 className="text-lg lg:text-xl xl:text-2xl font-bold text-heading-red leading-tight">
@@ -1078,7 +1116,10 @@ export default function Index() {
                   {/* Ratings */}
                   {selectedProduct.rating && (
                     <div className="mb-4">
-                      <StarRating rating={selectedProduct.rating} reviewCount={selectedProduct.reviewCount} />
+                      <StarRating
+                        rating={selectedProduct.rating}
+                        reviewCount={selectedProduct.reviewCount}
+                      />
                     </div>
                   )}
 
@@ -1110,7 +1151,26 @@ export default function Index() {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
-                        SAVE {((parseFloat(calculatePricing(selectedProduct.price).regularPrice.replace('$', '')) - parseFloat(calculatePricing(selectedProduct.price).salePrice.replace('$', ''))) / parseFloat(calculatePricing(selectedProduct.price).regularPrice.replace('$', '')) * 100).toFixed(0)}%
+                        SAVE{" "}
+                        {(
+                          ((parseFloat(
+                            calculatePricing(
+                              selectedProduct.price,
+                            ).regularPrice.replace("$", ""),
+                          ) -
+                            parseFloat(
+                              calculatePricing(
+                                selectedProduct.price,
+                              ).salePrice.replace("$", ""),
+                            )) /
+                            parseFloat(
+                              calculatePricing(
+                                selectedProduct.price,
+                              ).regularPrice.replace("$", ""),
+                            )) *
+                          100
+                        ).toFixed(0)}
+                        %
                       </span>
                       <span className="text-sm text-red-600 font-bold flex items-center gap-1">
                         <Zap className="w-3 h-3" />
@@ -1172,18 +1232,21 @@ export default function Index() {
 
                 {/* Bottom Section - Scrollable Product Details */}
                 <div className="flex-1 overflow-y-auto p-4 lg:p-6 bg-gray-50">
-
                   {/* About this item - Bullet Points */}
                   <div className="bg-white p-4 lg:p-5 rounded-2xl mb-4 border border-gray-200 shadow-lg">
                     <div className="flex items-center gap-2 mb-4">
                       <Sparkles className="w-5 h-5 text-logo-green" />
-                      <h5 className="font-bold text-heading-red text-lg">About this item</h5>
+                      <h5 className="font-bold text-heading-red text-lg">
+                        About this item
+                      </h5>
                     </div>
                     {selectedProduct.bulletPoints ? (
                       <ul className="space-y-3 text-sm lg:text-base text-gray-700">
                         {selectedProduct.bulletPoints.map((point, index) => (
                           <li key={index} className="flex items-start gap-3">
-                            <span className="text-logo-green font-bold text-xl leading-none mt-0.5 flex-shrink-0">•</span>
+                            <span className="text-logo-green font-bold text-xl leading-none mt-0.5 flex-shrink-0">
+                              •
+                            </span>
                             <span className="leading-relaxed">{point}</span>
                           </li>
                         ))}
@@ -1199,7 +1262,9 @@ export default function Index() {
                   <div className="bg-logo-green/5 p-4 lg:p-5 rounded-2xl mb-4 border-2 border-logo-green/20 shadow-lg">
                     <div className="flex items-center gap-2 mb-4">
                       <CheckCircle className="w-5 h-5 text-logo-green" />
-                      <h5 className="font-bold text-heading-red text-lg">What's Included</h5>
+                      <h5 className="font-bold text-heading-red text-lg">
+                        What's Included
+                      </h5>
                     </div>
                     <div className="grid grid-cols-1 gap-3 text-sm lg:text-base text-gray-600">
                       <div className="flex items-center gap-3">
@@ -1225,7 +1290,9 @@ export default function Index() {
                   <div className="bg-white p-4 lg:p-5 rounded-2xl border border-gray-200 shadow-lg">
                     <div className="flex items-center gap-2 mb-4">
                       <Truck className="w-5 h-5 text-logo-green" />
-                      <h5 className="font-bold text-heading-red text-lg">Shipping & Delivery</h5>
+                      <h5 className="font-bold text-heading-red text-lg">
+                        Shipping & Delivery
+                      </h5>
                     </div>
                     <div className="space-y-3 text-sm lg:text-base text-gray-600">
                       <div className="flex items-center gap-3">
@@ -1275,7 +1342,9 @@ export default function Index() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black tracking-wide">BUY NOW ON</span>
-                  <span className="font-black tracking-wide text-yellow-300">WALMART</span>
+                  <span className="font-black tracking-wide text-yellow-300">
+                    WALMART
+                  </span>
                 </div>
                 <div className="bg-yellow-400 text-blue-800 px-2 py-1 rounded-full text-base font-black">
                   {calculatePricing(selectedProduct.price).salePrice}
