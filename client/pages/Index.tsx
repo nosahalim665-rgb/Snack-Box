@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   X,
   Truck,
@@ -9,58 +9,155 @@ import {
   Sparkles,
   Zap,
   CheckCircle,
+  ChevronDown,
+  ExternalLink,
+  Play,
+  Maximize2,
+  Eye,
+  Star,
 } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import AutoScrollCarousel from "../components/AutoScrollCarousel";
+
+// Helper function to calculate pricing
+const calculatePricing = (salePrice: string) => {
+  const salePriceNumeric = parseFloat(salePrice.replace("$", ""));
+  // Following the formula: regularPrice = salePrice / 0.3 (since salePrice = regularPrice * 0.3)
+  const regularPriceCalculated = salePriceNumeric / 0.3;
+
+  // Round up to .99 - get the integer part and add .99
+  const regularPriceRounded = Math.floor(regularPriceCalculated) + 0.99;
+
+  return {
+    salePrice: salePrice,
+    regularPrice: `$${regularPriceRounded.toFixed(2)}`,
+  };
+};
+
+// Star Rating Component
+const StarRating = ({
+  rating,
+  reviewCount,
+}: {
+  rating: number;
+  reviewCount?: number;
+}) => {
+  return (
+    <div className="flex items-center gap-1">
+      <div className="flex">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+          />
+        ))}
+      </div>
+      {reviewCount && (
+        <span className="text-sm text-gray-600 ml-1">({reviewCount})</span>
+      )}
+    </div>
+  );
+};
 
 const products = [
   {
     id: 1,
-    name: "Gift a Snack Chip Variety Snack Box - 35 Count",
+    name: "Gift a Snack Spread the Joy Snack Pack, Assorted College Care Package for Students, Office Party, 35 Count",
+    shortName: "Gift a Snack – Spread the Joy Snack Pack",
     description:
-      "A delicious assortment of individually wrapped snacks including chips, crackers, cookies, and candy. Perfect for gifting, office snacks, or on-the-go treats.",
+      "Spread joy with the perfect gift for adults, teens, and college students. Premium assortment of chips, crackers, cookies, and candy in beautifully branded high-end packaging.",
     size: "35 ct",
     price: "$22.97",
+    rating: 5,
+    reviewCount: 286,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F77788b1b06194d9e9278b4a63bb3471e?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-35-Count-Snacks-Box-with-Variety-Assortment-of-snack-packs-chips-variety-Crackers-Cookies-Candy/6277108895?classType=VARIANT",
+    bulletPoints: [
+      "Beautifully branded high-end packaging for an impressive gift.",
+      "Convenient individual servings for on-the-go snacking.",
+      "Includes a heartwarming greeting card for a personal touch.",
+      "Spread joy with the perfect gift for adults, teens, and college students.",
+      "Variety assortment of chips, crackers, cookies, and candy.",
+      "Honesty is our main value - some snacks may be replaced for similar or more value.",
+      "Gift a Snack - the ultimate snack box for any occasion.",
+    ],
   },
   {
     id: 2,
-    name: "Gift a Snack Chip Variety Snack Box - 42 Count",
+    name: "Gift a Snack Chip Variety Snack Box – Snack Pack Variety Box, 42 Count",
+    shortName: "Gift a Snack Chip Variety Snack Box",
     description:
-      "Includes 42 premium snacks from brands like Airheads, Cheez It, and Famous Amos. Comes in high-end packaging with a greeting card. Great for students, employees, and family members.",
+      "Variety assortment of brands like Airheads, Cheez It, and Famous Amos. Contains 42 individually wrapped treats in high-end packaging with a greeting card.",
     size: "42 ct",
     price: "$23.96",
+    rating: 5,
+    reviewCount: 286,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2Fcd06d6ab52e341e2b57efd6b128aeeaa?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-Chip-Variety-Snack-Box-Snack-Pack-Variety-Box-42-Count/5298521902?classType=VARIANT&athbdg=L1600",
+    bulletPoints: [
+      "The Gift a Snack Chip Variety Snack Box contains 42 individually wrapped treats, including chips, crackers, cookies, and candy.",
+      "Variety assortment of brands like Airheads, Cheez It, and Famous Amos.",
+      "Comes with a heartwarming greeting card and high-end packaging.",
+      "Ideal for adults, teens, and college students, and suitable for on-the-go snacking.",
+      "Some snacks may be replaced with similar or higher value items.",
+      "Perfect as a care package or a convenient snack option.",
+    ],
   },
   {
     id: 3,
-    name: "Gift a Snack Chip Variety Snack Box - 52 Count",
+    name: "Gift a Snack 52 Count Snack Box with Variety Snacks, Chips, Crackers, Cookies, Candy",
+    shortName: "Gift a Snack 52 Count Snack Box",
     description:
-      "52-count snack box filled with a diverse variety of sweet and salty treats. Ideal for care packages, corporate gifts, or family movie nights.",
+      "52-count snack box filled with a diverse variety of sweet and salty treats. Beautifully branded high-end packaging perfect for gifts and care packages.",
     size: "52 ct",
     price: "$31.46",
+    rating: 5,
+    reviewCount: 286,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F5ff73d8278224c2ab0b862f059e3802c?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-52-Count-Snack-Box-with-Variety-Snacks-Chips-Crackers-Cookies-Candy/5915077819?classType=VARIANT&athbdg=L1900",
+    bulletPoints: [
+      "Beautifully branded high-end packaging for an impressive gift.",
+      "Convenient individual servings for on-the-go snacking.",
+      "Includes a heartwarming greeting card for a personal touch.",
+      "Spread joy with the perfect gift for adults, teens, and college students.",
+      "Variety assortment of chips, crackers, cookies, and candy.",
+      "Honesty is our main value - some snacks may be replaced for similar or more value.",
+      "Gift a Snack - the ultimate snack box for any occasion.",
+      "Mouthwatering treats inside - Airheads, Cheez It, Famous Amos, and more!",
+    ],
   },
   {
     id: 4,
-    name: "Gift A Snack Snack Box Care Package - 105 Count",
+    name: "Ultimate Snack Box Variety Pack – 105 Count by Gift A Snack",
+    shortName: "Ultimate Snack Box – 105 Count",
     description:
-      'Dive into the ultimate snacking experience with the "Gift A Snack" Snack Box Care Package. Our 105-count variety pack brims with a mix of America\'s favorite candies, chips, crackers, and bars, offering something delicious for every craving. Perfectly packaged in individual servings for on-the-go ease, each box also includes a cheerful greeting card to spread extra joy. Thoughtfully presented in a beautifully branded box, this snack pack makes a fantastic gift for adults, teens, college students, or anyone who deserves a special treat. Note: Some snacks may vary but will always be of equal or greater value.',
+      "105-count pack with America's favorite candies, chips, crackers, and bars. Perfectly packaged in individual servings for on-the-go ease and ideal as a gift.",
     size: "105 ct",
     price: "$45.97",
+    rating: 5,
+    reviewCount: 286,
+    outOfStock: true,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F936b74c9566f406ebebd96074d052d09?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Ultimate-Snack-Box-Variety-Pack-105-Count-by-Gift-A-Snack/14496505954?classType=VARIANT",
+    bulletPoints: [
+      "105-count pack with America's favorite candies, chips, crackers, and bars.",
+      "Perfectly packaged in individual servings for on-the-go ease.",
+      "Ideal gift for adults, teens, college students, or anyone who deserves a treat.",
+    ],
   },
 ];
 
@@ -97,6 +194,8 @@ export default function Index() {
     (typeof products)[0] | null
   >(null);
   const [showFloatingButton, setShowFloatingButton] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const scrollToProducts = () => {
     document
@@ -106,6 +205,27 @@ export default function Index() {
 
   const openFirstProductModal = () => {
     setSelectedProduct(products[0]);
+  };
+
+  // Swipe to close functionality
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isDownSwipe = distance < -100; // Swipe down by more than 100px
+
+    if (isDownSwipe) {
+      setSelectedProduct(null);
+    }
   };
 
   useEffect(() => {
@@ -242,19 +362,19 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-blue-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-100 via-white to-blue-50 py-12 px-4 sm:py-20">
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-100 via-white to-blue-50 py-6 px-4 sm:py-20">
         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-8 items-center">
             {/* Content */}
             <div className="text-center lg:text-left fade-in">
               {/* Logo with frame */}
-              <div className="flex justify-center lg:justify-start mb-4 sm:mb-5">
-                <div className="bg-gray-100 p-3 sm:p-4 rounded-lg sm:rounded-xl shadow-lg inline-block">
+              <div className="flex justify-center lg:justify-start mb-2 sm:mb-5">
+                <div className="bg-gray-100 p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-lg inline-block">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2Fcd932fcd18414ba798762d622c2b825c?format=webp&width=400&quality=90"
                     alt="Gift A Snack - Premium Snack Box Company Logo"
-                    className="h-18 sm:h-20 lg:h-24 w-auto"
+                    className="h-16 sm:h-20 lg:h-24 w-auto"
                     loading="eager"
                     fetchPriority="high"
                     width="200"
@@ -263,7 +383,7 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="inline-flex items-center gap-2 bg-logo-green/10 text-logo-green px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-4">
+              <div className="inline-flex items-center gap-2 bg-logo-green/10 text-logo-green px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-2 sm:mb-4">
                 <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">
                   Premium Quality Guaranteed
@@ -271,7 +391,7 @@ export default function Index() {
                 <span className="sm:hidden">Premium Quality</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-heading-red mb-4 leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-heading-red mb-2 sm:mb-4 leading-tight tracking-tight">
                 <span className="block">Gift A Snack Box</span>
                 <span className="block text-snack-dark-blue">
                   Perfect Gift for
@@ -281,7 +401,7 @@ export default function Index() {
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base text-snack-dark-blue/80 mb-4 sm:mb-5 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-sm sm:text-base text-snack-dark-blue/80 mb-3 sm:mb-5 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                 <span className="hidden sm:inline">
                   Premium assortment of delicious snacks, beautifully packaged.
                   Perfect for gifts, office treats, and special occasions.
@@ -291,15 +411,15 @@ export default function Index() {
                 </span>
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start mb-4 sm:mb-5">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 justify-center lg:justify-start mb-3 sm:mb-5">
                 <button
                   onClick={scrollToProducts}
-                  className="bg-logo-green hover:bg-green-500 text-white font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm sm:text-base button-enhanced flex items-center justify-center gap-2 min-h-[40px] touch-manipulation tap-highlight-none focus-visible-ring"
+                  className="bg-logo-green hover:bg-green-500 text-white font-bold px-6 sm:px-6 py-4 sm:py-3 rounded-xl text-base sm:text-base button-enhanced flex items-center justify-center gap-2 min-h-[56px] sm:min-h-[48px] touch-manipulation tap-highlight-none focus-visible-ring"
                 >
-                  <Package className="w-4 h-4" />
+                  <Package className="w-5 h-5" />
                   Shop Now
                 </button>
-                <button className="border-2 border-logo-green text-logo-green hover:bg-logo-green hover:text-white font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm sm:text-base transition-all duration-300 min-h-[40px] touch-manipulation tap-highlight-none focus-visible-ring">
+                <button className="border-2 border-logo-green text-logo-green hover:bg-logo-green hover:text-white font-bold px-6 sm:px-6 py-4 sm:py-3 rounded-xl text-base sm:text-base transition-all duration-300 min-h-[56px] sm:min-h-[48px] touch-manipulation tap-highlight-none focus-visible-ring">
                   Learn More
                 </button>
               </div>
@@ -345,10 +465,10 @@ export default function Index() {
       <AutoScrollCarousel />
 
       {/* Features & Benefits Section */}
-      <section className="py-12 px-4 bg-gradient-to-b from-blue-50 to-white">
+      <section className="py-6 sm:py-12 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-3 tracking-tight">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-2 sm:mb-3 tracking-tight">
               Why Choose Gift A Snack Box?
             </h2>
             <p className="text-base text-snack-dark-blue/70 max-w-xl mx-auto">
@@ -384,11 +504,11 @@ export default function Index() {
       {/* Product Sizes Section */}
       <section
         id="products-section"
-        className="py-12 px-4 bg-gradient-to-b from-white to-blue-50"
+        className="py-6 sm:py-12 px-4 bg-gradient-to-b from-white to-blue-50"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-3 tracking-tight">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-2 sm:mb-3 tracking-tight">
               Choose Your Perfect Snack Box Size
             </h2>
             <p className="text-base text-snack-dark-blue/70 max-w-xl mx-auto">
@@ -397,53 +517,243 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto">
-            {products.map((product, index) => (
-              <div
-                key={product.id}
-                className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300"
-              >
-                <div className="aspect-square overflow-hidden relative">
-                  <img
-                    src={`${product.image}&quality=85`}
-                    alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
-                    className="w-full h-full object-cover image-hover"
-                    loading="lazy"
-                    width="300"
-                    height="300"
-                  />
-                  {index === 1 && (
-                    <div className="absolute top-3 right-3 bg-logo-green text-white px-2 py-1 rounded-full text-xs font-bold">
-                      Popular
-                    </div>
-                  )}
-                </div>
+          {/* Mobile Horizontal Scroll - Modern E-commerce Design */}
+          <div className="block sm:hidden">
+            <div className="overflow-x-auto pb-4 -mx-4 px-4">
+              <div className="flex gap-6 w-max">
+                {products.map((product, index) => {
+                  const pricing = calculatePricing(product.price);
+                  const savingsPercent = (
+                    ((parseFloat(pricing.regularPrice.replace("$", "")) -
+                      parseFloat(pricing.salePrice.replace("$", ""))) /
+                      parseFloat(pricing.regularPrice.replace("$", ""))) *
+                    100
+                  ).toFixed(0);
 
-                <div className="p-3">
-                  <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-600 mb-2 line-clamp-2 leading-relaxed text-xs">
-                    {product.description}
-                  </p>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-lg font-bold text-heading-red">
-                      {product.price}
-                    </span>
-                    <span className="text-xs text-white font-semibold bg-logo-green px-2 py-0.5 rounded-full">
-                      {product.size}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="w-full bg-logo-green hover:bg-green-500 text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1"
-                  >
-                    <Package className="w-3 h-3" />
-                    Open Your Box
-                  </button>
-                </div>
+                  return (
+                    <div
+                      key={product.id}
+                      className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 w-[300px] flex-shrink-0 overflow-hidden group hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      {/* Product Image - 70% of card area */}
+                      <div className="relative h-[280px] overflow-hidden">
+                        <img
+                          src={`${product.image}&quality=90`}
+                          alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
+                          width="300"
+                          height="280"
+                        />
+
+                        {/* Discount Badge */}
+                        <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-black shadow-lg">
+                          -{savingsPercent}%
+                        </div>
+
+                        {/* Popular Badge */}
+                        {index === 1 && (
+                          <div className="absolute top-3 right-3 bg-orange-500 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg">
+                            🔥 Popular
+                          </div>
+                        )}
+
+                        {/* Out of Stock Overlay */}
+                        {product.outOfStock && (
+                          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                            <div className="bg-white px-4 py-2 rounded-full">
+                              <span className="text-red-600 font-bold text-sm">
+                                Out of Stock
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Content Area - 30% of card area */}
+                      <div className="p-4">
+                        {/* Product Title */}
+                        <h3 className="font-bold text-gray-900 mb-3 leading-tight text-base line-clamp-2">
+                          {product.shortName || product.name}
+                        </h3>
+
+                        {/* Box Contents Icons */}
+                        <div className="flex items-center gap-1 mb-3">
+                          <span className="text-lg">🍪</span>
+                          <span className="text-lg">🍫</span>
+                          <span className="text-lg">🥨</span>
+                          <span className="text-xs text-gray-500 ml-2">
+                            {product.size} items
+                          </span>
+                        </div>
+
+                        {/* Price Section - Prominent */}
+                        <div className="mb-4">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-2xl font-black text-red-500">
+                              {pricing.salePrice}
+                            </span>
+                            <span className="text-lg text-gray-400 line-through">
+                              {pricing.regularPrice}
+                            </span>
+                          </div>
+                          <div className="text-sm font-bold text-green-600">
+                            Save $
+                            {(
+                              parseFloat(
+                                pricing.regularPrice.replace("$", ""),
+                              ) - parseFloat(pricing.salePrice.replace("$", ""))
+                            ).toFixed(2)}
+                          </div>
+                        </div>
+
+                        {/* Ratings */}
+                        {product.rating && (
+                          <div className="mb-4">
+                            <StarRating
+                              rating={product.rating}
+                              reviewCount={product.reviewCount}
+                            />
+                          </div>
+                        )}
+
+                        {/* View Details Button - Vibrant */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProduct(product);
+                          }}
+                          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 rounded-xl text-base flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                          <Eye className="w-5 h-5" />
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
+            </div>
+            {/* Scroll indicator */}
+            <div className="text-center mt-4">
+              <span className="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-full">
+                ← Swipe to see more boxes →
+              </span>
+            </div>
+          </div>
+
+          {/* Desktop/Tablet Grid - Modern E-commerce Design */}
+          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
+            {products.map((product, index) => {
+              const pricing = calculatePricing(product.price);
+              const savingsPercent = (
+                ((parseFloat(pricing.regularPrice.replace("$", "")) -
+                  parseFloat(pricing.salePrice.replace("$", ""))) /
+                  parseFloat(pricing.regularPrice.replace("$", ""))) *
+                100
+              ).toFixed(0);
+
+              return (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:scale-[1.02] cursor-pointer"
+                >
+                  {/* Product Image - 70% of card area */}
+                  <div className="relative h-[240px] lg:h-[280px] overflow-hidden">
+                    <img
+                      src={`${product.image}&quality=90`}
+                      alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                      width="320"
+                      height="280"
+                    />
+
+                    {/* Discount Badge */}
+                    <div className="absolute top-3 left-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-black shadow-lg">
+                      -{savingsPercent}%
+                    </div>
+
+                    {/* Popular Badge */}
+                    {index === 1 && (
+                      <div className="absolute top-3 right-3 bg-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-lg">
+                        🔥 Popular
+                      </div>
+                    )}
+
+                    {/* Out of Stock Overlay */}
+                    {product.outOfStock && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <div className="bg-white px-3 py-1.5 rounded-full">
+                          <span className="text-red-600 font-bold text-xs">
+                            Out of Stock
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content Area - 30% of card area */}
+                  <div className="p-4">
+                    {/* Product Title */}
+                    <h3 className="font-bold text-gray-900 mb-2 leading-tight text-sm lg:text-base line-clamp-2">
+                      {product.shortName || product.name}
+                    </h3>
+
+                    {/* Box Contents Icons */}
+                    <div className="flex items-center gap-1 mb-2">
+                      <span className="text-sm">🍪</span>
+                      <span className="text-sm">🍫</span>
+                      <span className="text-sm">🥨</span>
+                      <span className="text-xs text-gray-500 ml-2">
+                        {product.size}
+                      </span>
+                    </div>
+
+                    {/* Price Section - Prominent */}
+                    <div className="mb-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xl lg:text-2xl font-black text-red-500">
+                          {pricing.salePrice}
+                        </span>
+                        <span className="text-sm lg:text-base text-gray-400 line-through">
+                          {pricing.regularPrice}
+                        </span>
+                      </div>
+                      <div className="text-xs lg:text-sm font-bold text-green-600">
+                        Save $
+                        {(
+                          parseFloat(pricing.regularPrice.replace("$", "")) -
+                          parseFloat(pricing.salePrice.replace("$", ""))
+                        ).toFixed(2)}
+                      </div>
+                    </div>
+
+                    {/* Ratings */}
+                    {product.rating && (
+                      <div className="mb-3">
+                        <StarRating
+                          rating={product.rating}
+                          reviewCount={product.reviewCount}
+                        />
+                      </div>
+                    )}
+
+                    {/* View Details Button - Vibrant */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProduct(product);
+                      }}
+                      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2.5 lg:py-3 rounded-xl text-sm lg:text-base flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Eye className="w-4 h-4 lg:w-5 lg:h-5" />
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -452,7 +762,7 @@ export default function Index() {
       <TestimonialsCarousel />
       {/* TikTok Videos Section */}
       <section
-        className="tiktok-section py-12 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden"
+        className="tiktok-section py-6 sm:py-12 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden"
         style={{
           background:
             "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
@@ -466,13 +776,27 @@ export default function Index() {
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-10 relative z-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 tracking-tight">
+          <div className="text-center mb-6 sm:mb-10 relative z-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3 tracking-tight">
               Watch Gift A Snack on TikTok
             </h2>
             <p className="text-base text-gray-300 max-w-xl mx-auto">
               See our snack boxes in action and get inspired for your next order
             </p>
+          </div>
+
+          {/* Call to action for videos */}
+          <div className="text-center mb-6 sm:mb-8">
+            <a
+              href="https://tiktok.com/@nut.cravings"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <Play className="w-4 h-4" />
+              Follow us on TikTok
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </div>
 
           <div className="flex flex-col lg:flex-row justify-center items-start gap-8 lg:gap-12 max-w-6xl mx-auto">
@@ -504,28 +828,28 @@ export default function Index() {
       </section>
 
       {/* Final Call-to-Action Section */}
-      <section className="py-12 px-4 bg-gradient-to-br from-blue-100 via-blue-50 to-white relative overflow-hidden">
+      <section className="py-6 sm:py-12 px-4 bg-gradient-to-br from-blue-100 via-blue-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-logo-green/10 to-transparent"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="card-enhanced p-6 sm:p-8 bg-white/80 backdrop-blur-sm">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-4 tracking-tight">
+          <div className="card-enhanced p-4 sm:p-8 bg-white/80 backdrop-blur-sm">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-3 sm:mb-4 tracking-tight">
               Ready to Experience the Tastiest Gift A Snack Box?
             </h2>
-            <p className="text-base text-snack-dark-blue/80 mb-6 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base text-snack-dark-blue/80 mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed">
               Join thousands of satisfied customers. Choose your perfect size
               and order now from Walmart.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4 sm:mb-6">
               <button
                 onClick={scrollToProducts}
-                className="bg-logo-green hover:bg-green-500 text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base button-enhanced flex items-center justify-center gap-2"
+                className="bg-logo-green hover:bg-green-500 text-white font-bold px-6 sm:px-8 py-4 sm:py-3 rounded-xl text-base button-enhanced flex items-center justify-center gap-2 min-h-[56px] sm:min-h-[48px]"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-5 h-5" />
                 Order Now
               </button>
               <button
                 onClick={openFirstProductModal}
-                className="border-2 border-logo-green text-logo-green hover:bg-logo-green hover:text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base transition-all duration-300"
+                className="border-2 border-logo-green text-logo-green hover:bg-logo-green hover:text-white font-bold px-6 sm:px-8 py-4 sm:py-3 rounded-xl text-base transition-all duration-300 min-h-[56px] sm:min-h-[48px]"
               >
                 View Products
               </button>
@@ -693,127 +1017,349 @@ export default function Index() {
       {showFloatingButton && (
         <button
           onClick={openFirstProductModal}
-          className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 bg-logo-green hover:bg-green-500 text-white font-bold px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl shadow-xl z-50 transition-all duration-200 transform hover:scale-105 button-enhanced flex items-center gap-1.5 min-h-[36px] min-w-[36px]"
+          className="fixed bottom-4 right-4 sm:bottom-4 sm:right-4 bg-logo-green hover:bg-green-500 text-white font-bold px-4 sm:px-4 py-3 sm:py-2.5 rounded-xl sm:rounded-xl shadow-xl z-50 transition-all duration-200 transform hover:scale-105 button-enhanced flex items-center gap-2 min-h-[56px] sm:min-h-[44px] min-w-[56px] sm:min-w-[44px]"
         >
-          <ShoppingCart className="w-4 h-4" />
+          <ShoppingCart className="w-5 h-5 sm:w-4 sm:h-4" />
           <span className="hidden sm:inline text-sm">Buy Now</span>
-          <span className="sm:hidden text-xs">Buy</span>
+          <span className="sm:hidden text-sm font-semibold">Buy</span>
         </button>
       )}
 
-      {/* Enhanced Product Modal */}
+      {/* Enhanced Product Modal - Redesigned */}
       {selectedProduct && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[95vh] overflow-hidden shadow-2xl slide-up border border-logo-green/20">
-            {/* Modal Header */}
-            <div className="bg-gradient-to-r from-logo-green/5 to-logo-green/10 p-4 sm:p-6 border-b border-logo-green/20">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-end lg:items-center justify-center z-50 fade-in">
+          <div
+            className="bg-white rounded-t-3xl lg:rounded-3xl w-full lg:max-w-5xl xl:max-w-6xl max-h-[95vh] lg:max-h-[85vh] overflow-hidden shadow-2xl slide-up border-t-2 lg:border border-logo-green/20 relative"
+            style={{
+              animation: "slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Modal Header - Streamlined */}
+            <div className="bg-gradient-to-r from-logo-green/5 to-logo-green/10 p-3 lg:p-4 border-b border-logo-green/20 relative">
+              {/* Mobile swipe indicator */}
+              <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-2 lg:hidden"></div>
+
               <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-logo-green rounded-full flex items-center justify-center">
-                    <Package className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-logo-green rounded-full flex items-center justify-center shadow-lg">
+                    <Package className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-2xl font-bold text-heading-red">
+                  <h3 className="text-lg font-bold text-heading-red">
                     Product Details
                   </h3>
                 </div>
                 <button
                   onClick={() => setSelectedProduct(null)}
-                  className="p-2 sm:p-3 hover:bg-red-50 hover:text-red-500 rounded-full transition-all duration-200 group min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  className="p-2 hover:bg-red-50 hover:text-red-500 rounded-full transition-all duration-200 group min-h-[40px] min-w-[40px] flex items-center justify-center shadow-md hover:shadow-lg"
                 >
-                  <X className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                  <X className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </button>
               </div>
             </div>
 
-            <div className="p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[calc(95vh-100px)] sm:max-h-[calc(95vh-120px)]">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 items-start">
-                {/* Product Image */}
-                <div className="">
-                  {/* Spark Icon with Blue Frame */}
-                  <div className="flex justify-center mb-3 sm:mb-4">
-                    <div className="bg-blue-600 p-3 rounded-xl shadow-lg inline-block">
-                      <img
-                        src="https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F9eae62feb04c48cb96ee02dd2f9b0679?format=webp&width=100&quality=90"
-                        alt="Premium quality spark icon - Gift A Snack quality guarantee"
-                        className="h-6 w-6 sm:h-8 sm:w-8 filter brightness-0 invert"
-                        loading="lazy"
-                        width="32"
-                        height="32"
+            {/* Content Area - Optimized Layout */}
+            <div className="flex flex-col lg:grid lg:grid-cols-12 h-full overflow-hidden">
+              {/* Top Section - Always Visible (Mobile) / Left Section (Desktop) */}
+              <div className="lg:col-span-6 flex flex-col">
+                {/* Product Image - Further Reduced for Better Balance */}
+                <div className="relative flex-shrink-0">
+                  <img
+                    src={`${selectedProduct.image}&quality=90`}
+                    alt={`${selectedProduct.name} - Detailed view of premium snack variety box contents`}
+                    className="w-full h-40 sm:h-48 lg:h-52 xl:h-56 object-cover rounded-lg lg:rounded-none shadow-lg lg:shadow-none"
+                    loading="lazy"
+                    width="600"
+                    height="280"
+                  />
+                  <div className="absolute top-3 right-3 bg-blue-600 p-2 rounded-lg shadow-lg">
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F9eae62feb04c48cb96ee02dd2f9b0679?format=webp&width=100&quality=90"
+                      alt="Premium quality guarantee"
+                      className="h-4 w-4 filter brightness-0 invert"
+                      loading="lazy"
+                      width="16"
+                      height="16"
+                    />
+                  </div>
+                  {/* Premium overlay effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent lg:hidden"></div>
+                </div>
+
+                {/* Desktop: Additional Image Info */}
+                <div className="hidden lg:block p-3 bg-gradient-to-b from-gray-50 to-white border-b border-gray-200">
+                  <div className="flex items-center justify-between text-sm text-gray-600">
+                    <span className="flex items-center gap-2">
+                      <Eye className="w-4 h-4" />
+                      High-quality product image
+                    </span>
+                    <span className="bg-logo-green/10 text-logo-green px-2 py-1 rounded-full text-xs font-semibold">
+                      Premium Quality
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Section - Product Info & CTA */}
+              <div className="lg:col-span-6 flex flex-col">
+                {/* Top Product Info - Always Visible */}
+                <div className="flex-shrink-0 p-4 lg:p-6 bg-white border-b lg:border-b-0 lg:bg-gradient-to-b lg:from-white lg:to-gray-50">
+                  {/* Product Name */}
+                  <div className="mb-3">
+                    <h4 className="text-lg lg:text-xl xl:text-2xl font-bold text-heading-red leading-tight">
+                      {selectedProduct.name}
+                    </h4>
+                  </div>
+
+                  {/* Ratings */}
+                  {selectedProduct.rating && (
+                    <div className="mb-4">
+                      <StarRating
+                        rating={selectedProduct.rating}
+                        reviewCount={selectedProduct.reviewCount}
                       />
+                    </div>
+                  )}
+
+                  {/* Size & Price Section - Redesigned */}
+                  <div className="bg-gradient-to-r from-orange-50 via-red-50 to-orange-50 p-4 lg:p-5 rounded-2xl mb-4 lg:mb-6 border-2 border-orange-100 shadow-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-bold text-gray-700 flex items-center gap-2">
+                        <Package className="w-4 h-4 text-logo-green" />
+                        Size:
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-logo-green text-white font-bold px-3 py-1.5 rounded-full text-sm shadow-md">
+                          {selectedProduct.size}
+                        </span>
+                        {selectedProduct.outOfStock && (
+                          <span className="text-xs text-red-600 font-bold bg-red-100 px-3 py-1.5 rounded-full border-2 border-red-200">
+                            Out of Stock
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl lg:text-3xl xl:text-4xl font-black text-heading-red">
+                        {calculatePricing(selectedProduct.price).salePrice}
+                      </span>
+                      <span className="text-lg lg:text-xl text-gray-500 line-through">
+                        {calculatePricing(selectedProduct.price).regularPrice}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
+                        SAVE{" "}
+                        {(
+                          ((parseFloat(
+                            calculatePricing(
+                              selectedProduct.price,
+                            ).regularPrice.replace("$", ""),
+                          ) -
+                            parseFloat(
+                              calculatePricing(
+                                selectedProduct.price,
+                              ).salePrice.replace("$", ""),
+                            )) /
+                            parseFloat(
+                              calculatePricing(
+                                selectedProduct.price,
+                              ).regularPrice.replace("$", ""),
+                            )) *
+                          100
+                        ).toFixed(0)}
+                        %
+                      </span>
+                      <span className="text-sm text-red-600 font-bold flex items-center gap-1">
+                        <Zap className="w-3 h-3" />
+                        Limited time!
+                      </span>
                     </div>
                   </div>
 
-                  <div className="aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-logo-green/5 to-logo-green/10 p-4">
-                    <img
-                      src={`${selectedProduct.image}&quality=85`}
-                      alt={`${selectedProduct.name} - Detailed view of premium snack variety box contents`}
-                      className="w-full h-full object-cover rounded-xl image-hover"
-                      loading="lazy"
-                      width="400"
-                      height="400"
-                    />
+                  {/* Enhanced Buy Button - Walmart Style */}
+                  <div className="mb-4 lg:mb-6">
+                    <a
+                      href={selectedProduct.walmartLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-black py-4 lg:py-5 text-center rounded-2xl text-lg lg:text-xl xl:text-2xl transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 relative overflow-hidden border-2 border-blue-500 group"
+                    >
+                      {/* Walmart spark effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-blue-300/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                      {/* Shopping cart icon */}
+                      <div className="relative z-10 bg-white/20 p-2 rounded-full shadow-lg">
+                        <ShoppingCart className="w-6 h-6 lg:w-7 lg:h-7" />
+                      </div>
+
+                      <div className="relative z-10 flex flex-col">
+                        <span className="font-black tracking-wider text-lg lg:text-xl">
+                          BUY NOW ON
+                        </span>
+                        <span className="font-black tracking-wider text-yellow-300 text-xl lg:text-2xl">
+                          WALMART
+                        </span>
+                      </div>
+
+                      {/* Price reminder */}
+                      <div className="relative z-10 bg-yellow-400 text-blue-800 px-3 py-2 rounded-full text-base lg:text-lg font-black shadow-lg">
+                        {calculatePricing(selectedProduct.price).salePrice}
+                      </div>
+
+                      <ExternalLink className="w-5 h-5 lg:w-6 lg:h-6 relative z-10" />
+                    </a>
+
+                    {/* Trust indicators below main CTA */}
+                    <div className="flex items-center justify-center gap-4 lg:gap-6 mt-3 text-xs lg:text-sm text-gray-600">
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3 lg:w-4 lg:h-4 text-blue-600" />
+                        Fast Shipping
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3 lg:w-4 lg:h-4 text-blue-600" />
+                        Secure Payment
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3 lg:w-4 lg:h-4 text-blue-600" />
+                        Easy Returns
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Product Info */}
-                <div className="space-y-4 sm:space-y-6">
-                  <div>
-                    <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-heading-red mb-3 sm:mb-4 leading-tight">
-                      {selectedProduct.name}
-                    </h4>
-
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                      <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red">
-                        {selectedProduct.price}
-                      </span>
-                      <span className="bg-logo-green text-white font-bold px-3 py-1 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base lg:text-lg">
-                        {selectedProduct.size}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="bg-snack-light-gray/50 p-4 sm:p-6 rounded-xl sm:rounded-2xl">
-                    <h5 className="font-semibold text-heading-red mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
+                {/* Bottom Section - Scrollable Product Details */}
+                <div className="flex-1 overflow-y-auto p-4 lg:p-6 bg-gray-50">
+                  {/* About this item - Bullet Points */}
+                  <div className="bg-white p-4 lg:p-5 rounded-2xl mb-4 border border-gray-200 shadow-lg">
+                    <div className="flex items-center gap-2 mb-4">
                       <Sparkles className="w-5 h-5 text-logo-green" />
-                      Product Description
-                    </h5>
-                    <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">
-                      {selectedProduct.description}
-                    </p>
+                      <h5 className="font-bold text-heading-red text-lg">
+                        About this item
+                      </h5>
+                    </div>
+                    {selectedProduct.bulletPoints ? (
+                      <ul className="space-y-3 text-sm lg:text-base text-gray-700">
+                        {selectedProduct.bulletPoints.map((point, index) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <span className="text-logo-green font-bold text-xl leading-none mt-0.5 flex-shrink-0">
+                              •
+                            </span>
+                            <span className="leading-relaxed">{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-700 leading-relaxed text-sm lg:text-base">
+                        {selectedProduct.description}
+                      </p>
+                    )}
                   </div>
 
-                  {/* Features */}
-                  <div className="space-y-3">
-                    <h5 className="font-semibold text-heading-red flex items-center gap-2">
+                  {/* Key Features */}
+                  <div className="bg-logo-green/5 p-4 lg:p-5 rounded-2xl mb-4 border-2 border-logo-green/20 shadow-lg">
+                    <div className="flex items-center gap-2 mb-4">
                       <CheckCircle className="w-5 h-5 text-logo-green" />
-                      What's Included
-                    </h5>
-                    <div className="grid grid-cols-1 gap-2 text-sm text-gray-600">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-logo-green" />
-                        Premium variety of snacks
+                      <h5 className="font-bold text-heading-red text-lg">
+                        What's Included
+                      </h5>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3 text-sm lg:text-base text-gray-600">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
+                        Premium variety of snacks ({selectedProduct.size})
                       </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-logo-green" />
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
                         Beautiful gift packaging
                       </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-logo-green" />
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
                         Greeting card included
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
+                        Individually wrapped snacks
                       </div>
                     </div>
                   </div>
 
-                  {/* CTA Button */}
-                  <a
-                    href={selectedProduct.walmartLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 sm:py-5 text-center rounded-xl sm:rounded-2xl text-lg sm:text-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2 sm:gap-3 min-h-[48px]"
-                  >
-                    <ShoppingCart className="w-6 h-6" />
-                    Buy Now on Walmart
-                  </a>
+                  {/* Shipping & Delivery - Always Visible */}
+                  <div className="bg-white p-4 lg:p-5 rounded-2xl border border-gray-200 shadow-lg">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Truck className="w-5 h-5 text-logo-green" />
+                      <h5 className="font-bold text-heading-red text-lg">
+                        Shipping & Delivery
+                      </h5>
+                    </div>
+                    <div className="space-y-3 text-sm lg:text-base text-gray-600">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
+                        Fast shipping across the US
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
+                        Secure packaging guarantee
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
+                        Order tracking available
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-logo-green flex-shrink-0" />
+                        30-day satisfaction guarantee
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Final Trust Indicators */}
+                  <div className="flex items-center justify-center gap-4 lg:gap-6 mt-6 pt-4 border-t border-gray-200 text-xs lg:text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 lg:w-4 lg:h-4 text-logo-green" />
+                      Satisfaction Guaranteed
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 lg:w-4 lg:h-4 text-logo-green" />
+                      Secure Payment
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Enhanced Mobile Sticky Buy Button */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t-2 border-blue-200 lg:hidden shadow-2xl">
+              <a
+                href={selectedProduct.walmartLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-black py-4 text-center rounded-2xl text-lg transition-all duration-300 shadow-lg active:scale-[0.98] flex items-center justify-center gap-3 border-2 border-blue-500"
+              >
+                <div className="bg-white/20 p-1.5 rounded-full shadow-md">
+                  <ShoppingCart className="w-5 h-5" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-black tracking-wide">BUY NOW ON</span>
+                  <span className="font-black tracking-wide text-yellow-300">
+                    WALMART
+                  </span>
+                </div>
+                <div className="bg-yellow-400 text-blue-800 px-2 py-1 rounded-full text-base font-black">
+                  {calculatePricing(selectedProduct.price).salePrice}
+                </div>
+              </a>
+
+              {/* Mobile trust indicators */}
+              <div className="flex items-center justify-center gap-4 mt-2 text-xs text-gray-600">
+                <div className="flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-blue-600" />
+                  <span>Secure Checkout</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-blue-600" />
+                  <span>Fast Shipping</span>
                 </div>
               </div>
             </div>
