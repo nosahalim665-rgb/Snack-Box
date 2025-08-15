@@ -55,15 +55,50 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export default function TestimonialsCarousel() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Auto-sliding testimonials
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 4000); // Change every 4 seconds
+    }, 6000); // Increased to 6 seconds for better readability
 
     return () => clearInterval(interval);
   }, []);
+
+  // Navigation functions
+  const goToNext = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const goToPrev = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  // Touch handlers for swipe navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrev();
+    }
+  };
 
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-blue-50/50 to-white">
