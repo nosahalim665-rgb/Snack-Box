@@ -949,18 +949,28 @@ export default function Index() {
 
               {/* Product Info - Compact */}
               <div className="p-4">
-                {/* Product Name & Size */}
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <h4 className="text-lg sm:text-xl font-bold text-heading-red leading-tight flex-1">
+                {/* Product Name */}
+                <div className="mb-3">
+                  <h4 className="text-lg sm:text-xl font-bold text-heading-red leading-tight">
                     {selectedProduct.name}
                   </h4>
-                  <span className="bg-logo-green text-white font-bold px-3 py-1 rounded-full text-sm shrink-0">
-                    {selectedProduct.size}
-                  </span>
                 </div>
 
-                {/* Pricing Section */}
+                {/* Ratings */}
+                {selectedProduct.rating && (
+                  <div className="mb-4">
+                    <StarRating rating={selectedProduct.rating} reviewCount={selectedProduct.reviewCount} />
+                  </div>
+                )}
+
+                {/* Size & Price Section */}
                 <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-xl mb-4 border border-red-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-semibold text-gray-700">Size:</span>
+                    <span className="bg-logo-green text-white font-bold px-3 py-1 rounded-full text-sm">
+                      {selectedProduct.size}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-2xl sm:text-3xl font-bold text-heading-red">
                       {calculatePricing(selectedProduct.price).salePrice}
