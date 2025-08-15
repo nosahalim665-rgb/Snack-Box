@@ -14,6 +14,7 @@ import {
   Play,
   Maximize2,
   Eye,
+  Star,
 } from "lucide-react";
 import {
   Accordion,
