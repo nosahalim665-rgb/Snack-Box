@@ -80,9 +80,8 @@ const products = [
       "Includes a heartwarming greeting card for a personal touch.",
       "Spread joy with the perfect gift for adults, teens, and college students.",
       "Variety assortment of chips, crackers, cookies, and candy.",
-      "Honesty is our main value – some snacks may be replaced for similar or more value.",
-      "Gift a Snack – the ultimate snack box for any occasion.",
-      "Mouthwatering treats inside – Airheads, Cheez It, Famous Amos, and more!"
+      "Honesty is our main value - some snacks may be replaced for similar or more value.",
+      "Gift a Snack - the ultimate snack box for any occasion."
     ]
   },
   {
@@ -100,12 +99,10 @@ const products = [
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-Chip-Variety-Snack-Box-Snack-Pack-Variety-Box-42-Count/5298521902?classType=VARIANT&athbdg=L1600",
     bulletPoints: [
-      "Contains 42 individually wrapped treats including chips, crackers, cookies, and candy.",
+      "The Gift a Snack Chip Variety Snack Box contains 42 individually wrapped treats, including chips, crackers, cookies, and candy.",
       "Variety assortment of brands like Airheads, Cheez It, and Famous Amos.",
-      "Includes a heartwarming greeting card.",
-      "Packed in high-end packaging for an impressive gift.",
-      "Ideal for adults, teens, and college students.",
-      "Suitable for on-the-go snacking.",
+      "Comes with a heartwarming greeting card and high-end packaging.",
+      "Ideal for adults, teens, and college students, and suitable for on-the-go snacking.",
       "Some snacks may be replaced with similar or higher value items.",
       "Perfect as a care package or a convenient snack option."
     ]
@@ -130,7 +127,9 @@ const products = [
       "Includes a heartwarming greeting card for a personal touch.",
       "Spread joy with the perfect gift for adults, teens, and college students.",
       "Variety assortment of chips, crackers, cookies, and candy.",
-      "Honesty is our main value – some snacks may be replaced for similar or more value."
+      "Honesty is our main value - some snacks may be replaced for similar or more value.",
+      "Gift a Snack - the ultimate snack box for any occasion.",
+      "Mouthwatering treats inside - Airheads, Cheez It, Famous Amos, and more!"
     ]
   },
   {
@@ -191,6 +190,7 @@ export default function Index() {
   const [showFloatingButton, setShowFloatingButton] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [expandedDetails, setExpandedDetails] = useState<{[key: number]: boolean}>({});
 
   const scrollToProducts = () => {
     document
