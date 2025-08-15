@@ -13,6 +13,16 @@ import {
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import AutoScrollCarousel from "../components/AutoScrollCarousel";
 
+// Helper function to calculate pricing
+const calculatePricing = (salePrice: string) => {
+  const numericPrice = parseFloat(salePrice.replace('$', ''));
+  const regularPrice = numericPrice / 0.3; // Since salePrice = regularPrice * 0.3, then regularPrice = salePrice / 0.3
+  return {
+    salePrice: salePrice,
+    regularPrice: `$${regularPrice.toFixed(2)}`
+  };
+};
+
 const products = [
   {
     id: 1,
