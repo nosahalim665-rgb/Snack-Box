@@ -509,11 +509,16 @@ export default function Index() {
 
                       <div className="p-4">
                         <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
-                          {product.name}
+                          {product.shortName || product.name} ({product.size})
                         </h3>
-                        <p className="text-gray-600 mb-3 line-clamp-2 leading-relaxed text-xs">
-                          {product.description}
-                        </p>
+
+                        {/* Ratings */}
+                        {product.rating && (
+                          <div className="mb-2">
+                            <StarRating rating={product.rating} reviewCount={product.reviewCount} />
+                          </div>
+                        )}
+
                         <div className="flex justify-between items-center mb-3">
                           <div className="flex flex-col">
                             <div className="flex items-center gap-2">
