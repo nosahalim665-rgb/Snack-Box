@@ -563,28 +563,28 @@ export default function Index() {
       </section>
 
       {/* Final Call-to-Action Section */}
-      <section className="py-12 px-4 bg-gradient-to-br from-blue-100 via-blue-50 to-white relative overflow-hidden">
+      <section className="py-6 sm:py-12 px-4 bg-gradient-to-br from-blue-100 via-blue-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-logo-green/10 to-transparent"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="card-enhanced p-6 sm:p-8 bg-white/80 backdrop-blur-sm">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-4 tracking-tight">
+          <div className="card-enhanced p-4 sm:p-8 bg-white/80 backdrop-blur-sm">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-3 sm:mb-4 tracking-tight">
               Ready to Experience the Tastiest Gift A Snack Box?
             </h2>
-            <p className="text-base text-snack-dark-blue/80 mb-6 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base text-snack-dark-blue/80 mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed">
               Join thousands of satisfied customers. Choose your perfect size
               and order now from Walmart.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4 sm:mb-6">
               <button
                 onClick={scrollToProducts}
-                className="bg-logo-green hover:bg-green-500 text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base button-enhanced flex items-center justify-center gap-2"
+                className="bg-logo-green hover:bg-green-500 text-white font-bold px-6 sm:px-8 py-4 sm:py-3 rounded-xl text-base button-enhanced flex items-center justify-center gap-2 min-h-[56px] sm:min-h-[48px]"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-5 h-5" />
                 Order Now
               </button>
               <button
                 onClick={openFirstProductModal}
-                className="border-2 border-logo-green text-logo-green hover:bg-logo-green hover:text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base transition-all duration-300"
+                className="border-2 border-logo-green text-logo-green hover:bg-logo-green hover:text-white font-bold px-6 sm:px-8 py-4 sm:py-3 rounded-xl text-base transition-all duration-300 min-h-[56px] sm:min-h-[48px]"
               >
                 View Products
               </button>
