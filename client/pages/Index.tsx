@@ -596,8 +596,8 @@ export default function Index() {
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-10 relative z-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 tracking-tight">
+          <div className="text-center mb-6 sm:mb-10 relative z-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3 tracking-tight">
               Watch Gift A Snack on TikTok
             </h2>
             <p className="text-base text-gray-300 max-w-xl mx-auto">
