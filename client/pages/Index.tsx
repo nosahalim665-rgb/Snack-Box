@@ -539,7 +539,7 @@ export default function Index() {
                         </div>
                         <div className="w-full bg-logo-green/10 text-logo-green font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1 border border-logo-green/30">
                           <Package className="w-3 h-3" />
-                          Tap to Open Your Box
+                          View Details
                         </div>
                       </div>
                     </div>
