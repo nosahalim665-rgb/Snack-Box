@@ -988,17 +988,17 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Content Area - Two Section Layout */}
+            {/* Content Area - Optimized Layout */}
             <div className="flex flex-col lg:grid lg:grid-cols-12 h-full overflow-hidden">
 
               {/* Top Section - Always Visible (Mobile) / Left Section (Desktop) */}
-              <div className="lg:col-span-7 flex flex-col">
-                {/* Product Image - Reduced Height */}
+              <div className="lg:col-span-6 flex flex-col">
+                {/* Product Image - Further Reduced for Better Balance */}
                 <div className="relative flex-shrink-0">
                   <img
                     src={`${selectedProduct.image}&quality=90`}
                     alt={`${selectedProduct.name} - Detailed view of premium snack variety box contents`}
-                    className="w-full h-48 sm:h-56 lg:h-64 xl:h-72 object-cover rounded-lg lg:rounded-none lg:rounded-tl-none lg:rounded-tr-none shadow-lg lg:shadow-none"
+                    className="w-full h-40 sm:h-48 lg:h-52 xl:h-56 object-cover rounded-lg lg:rounded-none shadow-lg lg:shadow-none"
                     loading="lazy"
                     width="600"
                     height="280"
@@ -1018,7 +1018,7 @@ export default function Index() {
                 </div>
 
                 {/* Desktop: Additional Image Info */}
-                <div className="hidden lg:block p-4 bg-gradient-to-b from-gray-50 to-white border-b border-gray-200">
+                <div className="hidden lg:block p-3 bg-gradient-to-b from-gray-50 to-white border-b border-gray-200">
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <span className="flex items-center gap-2">
                       <Eye className="w-4 h-4" />
@@ -1032,7 +1032,7 @@ export default function Index() {
               </div>
 
               {/* Right Section - Product Info & CTA */}
-              <div className="lg:col-span-5 flex flex-col">
+              <div className="lg:col-span-6 flex flex-col">
 
                 {/* Top Product Info - Always Visible */}
                 <div className="flex-shrink-0 p-4 lg:p-6 bg-white border-b lg:border-b-0 lg:bg-gradient-to-b lg:from-white lg:to-gray-50">
