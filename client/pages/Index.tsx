@@ -976,35 +976,6 @@ export default function Index() {
                 {/* Collapsible Additional Details */}
                 <Accordion type="single" collapsible className="space-y-2">
 
-                  {/* What's Included */}
-                  <AccordionItem value="included" className="border border-gray-200 rounded-lg">
-                    <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-gray-50">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-logo-green" />
-                        <span className="font-semibold text-heading-red">What's Included</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4">
-                      <div className="space-y-2 text-sm text-gray-600">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-logo-green" />
-                          Premium variety of snacks ({selectedProduct.size})
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-logo-green" />
-                          Beautiful gift packaging
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-logo-green" />
-                          Greeting card included
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-logo-green" />
-                          Individually wrapped snacks
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
 
                   {/* Shipping & Delivery */}
                   <AccordionItem value="shipping" className="border border-gray-200 rounded-lg">
