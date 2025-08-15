@@ -617,73 +617,98 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Desktop/Tablet Grid */}
-          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          {/* Desktop/Tablet Grid - Modern E-commerce Design */}
+          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
             {products.map((product, index) => {
               const pricing = calculatePricing(product.price);
+              const savingsPercent = ((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0);
+
               return (
                 <div
                   key={product.id}
-                  onClick={() => setSelectedProduct(product)}
-                  className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:scale-[1.02] cursor-pointer"
                 >
-                  <div className="aspect-square overflow-hidden relative">
+                  {/* Product Image - 70% of card area */}
+                  <div className="relative h-[240px] lg:h-[280px] overflow-hidden">
                     <img
-                      src={`${product.image}&quality=85`}
+                      src={`${product.image}&quality=90`}
                       alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
-                      className="w-full h-full object-cover image-hover"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
-                      width="300"
-                      height="300"
+                      width="320"
+                      height="280"
                     />
+
+                    {/* Discount Badge */}
+                    <div className="absolute top-3 left-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-black shadow-lg">
+                      -{savingsPercent}%
+                    </div>
+
+                    {/* Popular Badge */}
                     {index === 1 && (
-                      <div className="absolute top-3 right-3 bg-logo-green text-white px-2 py-1 rounded-full text-xs font-bold">
-                        Popular
+                      <div className="absolute top-3 right-3 bg-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-lg">
+                        🔥 Popular
+                      </div>
+                    )}
+
+                    {/* Out of Stock Overlay */}
+                    {product.outOfStock && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <div className="bg-white px-3 py-1.5 rounded-full">
+                          <span className="text-red-600 font-bold text-xs">Out of Stock</span>
+                        </div>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-3">
-                    <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
-                      {product.shortName || product.name} ({product.size})
+                  {/* Content Area - 30% of card area */}
+                  <div className="p-4">
+                    {/* Product Title */}
+                    <h3 className="font-bold text-gray-900 mb-2 leading-tight text-sm lg:text-base line-clamp-2">
+                      {product.shortName || product.name}
                     </h3>
+
+                    {/* Box Contents Icons */}
+                    <div className="flex items-center gap-1 mb-2">
+                      <span className="text-sm">🍪</span>
+                      <span className="text-sm">🍫</span>
+                      <span className="text-sm">🥨</span>
+                      <span className="text-xs text-gray-500 ml-2">{product.size}</span>
+                    </div>
+
+                    {/* Price Section - Prominent */}
+                    <div className="mb-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xl lg:text-2xl font-black text-red-500">
+                          {pricing.salePrice}
+                        </span>
+                        <span className="text-sm lg:text-base text-gray-400 line-through">
+                          {pricing.regularPrice}
+                        </span>
+                      </div>
+                      <div className="text-xs lg:text-sm font-bold text-green-600">
+                        Save ${(parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))).toFixed(2)}
+                      </div>
+                    </div>
 
                     {/* Ratings */}
                     {product.rating && (
-                      <div className="mb-2">
+                      <div className="mb-3">
                         <StarRating rating={product.rating} reviewCount={product.reviewCount} />
                       </div>
                     )}
 
-                    <div className="flex justify-between items-center mb-2">
-                      <div className="flex flex-col">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg font-bold text-heading-red">
-                            {pricing.salePrice}
-                          </span>
-                          <span className="text-sm text-gray-500 line-through">
-                            {pricing.regularPrice}
-                          </span>
-                        </div>
-                        <span className="text-xs text-red-600 font-semibold">
-                          Save {((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0)}%
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="text-xs text-white font-semibold bg-logo-green px-2 py-0.5 rounded-full">
-                          {product.size}
-                        </span>
-                        {product.outOfStock && (
-                          <span className="text-xs text-red-600 font-semibold bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
-                            Out of Stock
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="w-full bg-logo-green text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 group-hover:bg-green-500 transition-colors">
-                      <ShoppingCart className="w-3 h-3" />
-                      Buy from Walmart
-                    </div>
+                    {/* View Details Button - Vibrant */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProduct(product);
+                      }}
+                      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2.5 lg:py-3 rounded-xl text-sm lg:text-base flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Eye className="w-4 h-4 lg:w-5 lg:h-5" />
+                      View Details
+                    </button>
                   </div>
                 </div>
               );
