@@ -42,15 +42,28 @@ const calculatePricing = (salePrice: string) => {
 const products = [
   {
     id: 1,
-    name: "Gift a Snack Chip Variety Snack Box - 35 Count",
+    name: "Gift a Snack Spread the Joy Snack Pack, Assorted College Care Package for Students, Office Party, 35 Count",
+    shortName: "Gift a Snack – Spread the Joy Snack Pack",
     description:
-      "A delicious assortment of individually wrapped snacks including chips, crackers, cookies, and candy. Perfect for gifting, office snacks, or on-the-go treats.",
+      "Spread joy with the perfect gift for adults, teens, and college students. Premium assortment of chips, crackers, cookies, and candy in beautifully branded high-end packaging.",
     size: "35 ct",
     price: "$22.97",
+    rating: 5,
+    reviewCount: 286,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F77788b1b06194d9e9278b4a63bb3471e?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-35-Count-Snacks-Box-with-Variety-Assortment-of-snack-packs-chips-variety-Crackers-Cookies-Candy/6277108895?classType=VARIANT",
+    bulletPoints: [
+      "Beautifully branded high-end packaging for an impressive gift.",
+      "Convenient individual servings for on-the-go snacking.",
+      "Includes a heartwarming greeting card for a personal touch.",
+      "Spread joy with the perfect gift for adults, teens, and college students.",
+      "Variety assortment of chips, crackers, cookies, and candy.",
+      "Honesty is our main value – some snacks may be replaced for similar or more value.",
+      "Gift a Snack – the ultimate snack box for any occasion.",
+      "Mouthwatering treats inside – Airheads, Cheez It, Famous Amos, and more!"
+    ]
   },
   {
     id: 2,
