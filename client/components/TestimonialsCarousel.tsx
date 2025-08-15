@@ -101,13 +101,13 @@ export default function TestimonialsCarousel() {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-blue-50/50 to-white">
+    <section className="py-10 sm:py-20 px-4 bg-gradient-to-b from-blue-50/50 to-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-snack-red mb-4">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-2 sm:mb-4">
             What Our Customers Say
           </h2>
-          <p className="text-lg text-snack-dark-blue/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-snack-dark-blue/70 max-w-2xl mx-auto">
             Don't just take our word for it - hear from our satisfied customers
           </p>
         </div>
@@ -121,21 +121,24 @@ export default function TestimonialsCarousel() {
             return (
               <div
                 key={testimonialIndex}
-                className="card-enhanced p-8 hover:scale-105 transition-all duration-500"
+                className="card-enhanced p-6 lg:p-8 hover:scale-105 transition-all duration-500"
               >
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-snack-green to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4 shadow-lg">
-                    {testimonial.name.charAt(0)}
-                  </div>
+                  <img
+                    src={testimonial.avatar}
+                    alt={`${testimonial.name} avatar`}
+                    className="w-16 h-16 rounded-full object-cover mr-4 shadow-lg border-2 border-logo-green/20"
+                    loading="lazy"
+                  />
                   <div>
-                    <h4 className="font-semibold text-snack-dark-blue text-lg">
+                    <h4 className="font-semibold text-heading-red text-lg">
                       {testimonial.name}
                     </h4>
                     <StarRating rating={testimonial.rating} />
                   </div>
                 </div>
-                <p className="text-gray-700 text-lg leading-relaxed relative">
-                  <span className="text-snack-green text-4xl absolute -top-2 -left-2 opacity-20">
+                <p className="text-gray-700 text-base lg:text-lg leading-relaxed relative">
+                  <span className="text-logo-green text-4xl absolute -top-2 -left-2 opacity-20">
                     "
                   </span>
                   {testimonial.text}
@@ -145,40 +148,82 @@ export default function TestimonialsCarousel() {
           })}
         </div>
 
-        {/* Mobile: Show 1 testimonial */}
-        <div className="md:hidden">
-          <div className="card-enhanced p-8 transition-all duration-500">
-            <div className="flex items-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-snack-green to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4 shadow-lg">
-                {testimonials[currentTestimonial].name.charAt(0)}
+        {/* Mobile: Single testimonial with swipe navigation */}
+        <div className="md:hidden relative">
+          <div
+            className="overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div className="card-enhanced p-6 transition-all duration-500 relative">
+              {/* Swipe indicator */}
+              <div className="text-center mb-4">
+                <div className="inline-flex items-center gap-2 bg-logo-green/10 text-logo-green px-3 py-1 rounded-full text-xs">
+                  <span>← Swipe for more reviews →</span>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-snack-dark-blue text-lg">
-                  {testimonials[currentTestimonial].name}
-                </h4>
-                <StarRating rating={testimonials[currentTestimonial].rating} />
+
+              <div className="flex items-center mb-6">
+                <img
+                  src={testimonials[currentTestimonial].avatar}
+                  alt={`${testimonials[currentTestimonial].name} avatar`}
+                  className="w-16 h-16 rounded-full object-cover mr-4 shadow-lg border-2 border-logo-green/20"
+                  loading="lazy"
+                />
+                <div>
+                  <h4 className="font-semibold text-heading-red text-lg">
+                    {testimonials[currentTestimonial].name}
+                  </h4>
+                  <StarRating rating={testimonials[currentTestimonial].rating} />
+                </div>
               </div>
+              <p className="text-gray-700 text-base leading-relaxed relative">
+                <span className="text-logo-green text-4xl absolute -top-2 -left-2 opacity-20">
+                  "
+                </span>
+                {testimonials[currentTestimonial].text}
+              </p>
             </div>
-            <p className="text-gray-700 text-lg leading-relaxed relative">
-              <span className="text-snack-green text-4xl absolute -top-2 -left-2 opacity-20">
-                "
-              </span>
-              {testimonials[currentTestimonial].text}
-            </p>
           </div>
+
+          {/* Navigation arrows for mobile */}
+          <button
+            onClick={goToPrev}
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-logo-green p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={goToNext}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-logo-green p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Indicators */}
-        <div className="flex justify-center mt-8 gap-2">
+        <div className="flex justify-center mt-6 sm:mt-8 gap-2">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentTestimonial(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentTestimonial ? "bg-snack-green" : "bg-gray-300"
+              className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 ${
+                index === currentTestimonial ? "bg-logo-green shadow-lg" : "bg-gray-300"
               }`}
+              aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
+        </div>
+
+        {/* Mobile testimonial counter */}
+        <div className="md:hidden text-center mt-4">
+          <span className="text-sm text-gray-600">
+            {currentTestimonial + 1} of {testimonials.length}
+          </span>
         </div>
       </div>
     </section>
