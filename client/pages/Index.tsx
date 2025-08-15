@@ -1021,15 +1021,26 @@ export default function Index() {
                   </div>
                 </div>
 
-                {/* Product Description - Always Visible */}
+                {/* About this item - Bullet Points */}
                 <div className="bg-snack-light-gray/50 p-4 rounded-xl mb-4 border border-gray-200">
                   <div className="flex items-center gap-2 mb-3">
                     <Sparkles className="w-4 h-4 text-logo-green" />
-                    <h5 className="font-semibold text-heading-red">Product Description</h5>
+                    <h5 className="font-semibold text-heading-red">About this item</h5>
                   </div>
-                  <p className="text-gray-700 leading-relaxed text-sm">
-                    {selectedProduct.description}
-                  </p>
+                  {selectedProduct.bulletPoints ? (
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      {selectedProduct.bulletPoints.map((point, index) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="text-logo-green font-bold text-lg leading-none mt-0.5">•</span>
+                          <span className="leading-relaxed">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-gray-700 leading-relaxed text-sm">
+                      {selectedProduct.description}
+                    </p>
+                  )}
                 </div>
 
                 {/* Key Features - Always Visible */}
