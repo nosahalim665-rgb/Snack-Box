@@ -1049,12 +1049,25 @@ export default function Index() {
                     href={selectedProduct.walmartLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 text-center rounded-xl text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] flex items-center justify-center gap-3 relative overflow-hidden"
+                    className="block w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-5 sm:py-4 text-center rounded-xl text-xl sm:text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 relative overflow-hidden border-2 border-orange-400"
                   >
                     {/* Button glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-600/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                    <ShoppingCart className="w-5 h-5 relative z-10" />
-                    <span className="relative z-10">Buy from Walmart</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-300/30 to-orange-500/30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+
+                    {/* Walmart-style shopping cart icon */}
+                    <div className="relative z-10 bg-white/20 p-1 rounded-full">
+                      <ShoppingCart className="w-6 h-6 sm:w-5 sm:h-5" />
+                    </div>
+
+                    <span className="relative z-10 font-extrabold tracking-wide">
+                      BUY NOW ON WALMART
+                    </span>
+
+                    {/* Price reminder */}
+                    <div className="relative z-10 bg-white/20 px-2 py-1 rounded-full text-sm font-bold">
+                      {calculatePricing(selectedProduct.price).salePrice}
+                    </div>
+
                     <ExternalLink className="w-4 h-4 relative z-10" />
                   </a>
 
