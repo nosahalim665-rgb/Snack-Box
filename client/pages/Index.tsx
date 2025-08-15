@@ -786,9 +786,19 @@ export default function Index() {
                     </h4>
 
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                      <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red">
-                        {selectedProduct.price}
-                      </span>
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red">
+                            {calculatePricing(selectedProduct.price).salePrice}
+                          </span>
+                          <span className="text-lg sm:text-xl text-gray-500 line-through">
+                            {calculatePricing(selectedProduct.price).regularPrice}
+                          </span>
+                        </div>
+                        <span className="text-sm sm:text-base text-red-600 font-semibold">
+                          Save {((parseFloat(calculatePricing(selectedProduct.price).regularPrice.replace('$', '')) - parseFloat(calculatePricing(selectedProduct.price).salePrice.replace('$', ''))) / parseFloat(calculatePricing(selectedProduct.price).regularPrice.replace('$', '')) * 100).toFixed(0)}% off regular price!
+                        </span>
+                      </div>
                       <span className="bg-logo-green text-white font-bold px-3 py-1 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base lg:text-lg">
                         {selectedProduct.size}
                       </span>
