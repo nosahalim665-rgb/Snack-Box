@@ -120,6 +120,8 @@ export default function Index() {
     (typeof products)[0] | null
   >(null);
   const [showFloatingButton, setShowFloatingButton] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const scrollToProducts = () => {
     document
