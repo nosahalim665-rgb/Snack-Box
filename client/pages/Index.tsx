@@ -430,11 +430,11 @@ export default function Index() {
       {/* Product Sizes Section */}
       <section
         id="products-section"
-        className="py-12 px-4 bg-gradient-to-b from-white to-blue-50"
+        className="py-6 sm:py-12 px-4 bg-gradient-to-b from-white to-blue-50"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-3 tracking-tight">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-heading-red mb-2 sm:mb-3 tracking-tight">
               Choose Your Perfect Snack Box Size
             </h2>
             <p className="text-base text-snack-dark-blue/70 max-w-xl mx-auto">
