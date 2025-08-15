@@ -768,6 +768,9 @@ export default function Index() {
             style={{
               animation: 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {/* Modal Header - Compact */}
             <div className="bg-gradient-to-r from-logo-green/5 to-logo-green/10 p-3 sm:p-4 border-b border-logo-green/20 relative">
