@@ -443,13 +443,84 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          {/* Mobile Horizontal Scroll */}
+          <div className="block sm:hidden">
+            <div className="overflow-x-auto pb-4 -mx-4 px-4">
+              <div className="flex gap-4 w-max">
+                {products.map((product, index) => {
+                  const pricing = calculatePricing(product.price);
+                  return (
+                    <div
+                      key={product.id}
+                      onClick={() => setSelectedProduct(product)}
+                      className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300 cursor-pointer w-[280px] flex-shrink-0 active:scale-95"
+                    >
+                      <div className="aspect-square overflow-hidden relative">
+                        <img
+                          src={`${product.image}&quality=85`}
+                          alt={`${product.name} - Premium snack variety box with ${product.size} assorted treats perfect for gifting`}
+                          className="w-full h-full object-cover image-hover"
+                          loading="lazy"
+                          width="280"
+                          height="280"
+                        />
+                        {index === 1 && (
+                          <div className="absolute top-3 right-3 bg-logo-green text-white px-2 py-1 rounded-full text-xs font-bold">
+                            Popular
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-4">
+                        <h3 className="text-sm font-bold text-heading-red mb-2 line-clamp-2 group-hover:text-logo-green transition-colors">
+                          {product.name}
+                        </h3>
+                        <p className="text-gray-600 mb-3 line-clamp-2 leading-relaxed text-xs">
+                          {product.description}
+                        </p>
+                        <div className="flex justify-between items-center mb-3">
+                          <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg font-bold text-heading-red">
+                                {pricing.salePrice}
+                              </span>
+                              <span className="text-sm text-gray-500 line-through">
+                                {pricing.regularPrice}
+                              </span>
+                            </div>
+                            <span className="text-xs text-red-600 font-semibold">
+                              Save {((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0)}%
+                            </span>
+                          </div>
+                          <span className="text-xs text-white font-semibold bg-logo-green px-2 py-1 rounded-full">
+                            {product.size}
+                          </span>
+                        </div>
+                        <div className="w-full bg-logo-green/10 text-logo-green font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1 border border-logo-green/30">
+                          <Package className="w-3 h-3" />
+                          Tap to Open Your Box
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            {/* Scroll indicator */}
+            <div className="text-center mt-2">
+              <span className="text-xs text-gray-500">← Swipe to see more boxes →</span>
+            </div>
+          </div>
+
+          {/* Desktop/Tablet Grid */}
+          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
             {products.map((product, index) => {
               const pricing = calculatePricing(product.price);
               return (
                 <div
                   key={product.id}
-                  className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300"
+                  onClick={() => setSelectedProduct(product)}
+                  className="card-enhanced overflow-hidden group hover:scale-105 transition-all duration-300 cursor-pointer"
                 >
                   <div className="aspect-square overflow-hidden relative">
                     <img
@@ -492,13 +563,10 @@ export default function Index() {
                         {product.size}
                       </span>
                     </div>
-                    <button
-                      onClick={() => setSelectedProduct(product)}
-                      className="w-full bg-logo-green hover:bg-green-500 text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1"
-                    >
+                    <div className="w-full bg-logo-green text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 group-hover:bg-green-500 transition-colors">
                       <Package className="w-3 h-3" />
                       Open Your Box
-                    </button>
+                    </div>
                   </div>
                 </div>
               );
