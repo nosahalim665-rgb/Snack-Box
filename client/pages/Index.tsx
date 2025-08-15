@@ -1014,9 +1014,16 @@ export default function Index() {
                 <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-xl mb-4 border border-red-100">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-semibold text-gray-700">Size:</span>
-                    <span className="bg-logo-green text-white font-bold px-3 py-1 rounded-full text-sm">
-                      {selectedProduct.size}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="bg-logo-green text-white font-bold px-3 py-1 rounded-full text-sm">
+                        {selectedProduct.size}
+                      </span>
+                      {selectedProduct.outOfStock && (
+                        <span className="text-sm text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full border border-red-200">
+                          Currently Out of Stock
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-2xl sm:text-3xl font-bold text-heading-red">
