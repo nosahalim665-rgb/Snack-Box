@@ -1050,51 +1050,17 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Sticky Buy Button */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 sm:relative sm:border-t-0 sm:bg-transparent">
-              {/* Price reminder above button */}
-              <div className="text-center mb-3">
-                <div className="inline-flex items-center gap-2 bg-red-50 px-3 py-1 rounded-full border border-red-200">
-                  <span className="text-lg font-bold text-heading-red">
-                    {calculatePricing(selectedProduct.price).salePrice}
-                  </span>
-                  <span className="text-sm text-gray-500 line-through">
-                    {calculatePricing(selectedProduct.price).regularPrice}
-                  </span>
-                  <span className="bg-red-600 text-white px-2 py-0.5 rounded-full text-xs font-bold">
-                    SAVE {((parseFloat(calculatePricing(selectedProduct.price).regularPrice.replace('$', '')) - parseFloat(calculatePricing(selectedProduct.price).salePrice.replace('$', ''))) / parseFloat(calculatePricing(selectedProduct.price).regularPrice.replace('$', '')) * 100).toFixed(0)}%
-                  </span>
-                </div>
-              </div>
-
+            {/* Secondary Sticky Buy Button (Mobile fallback) */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 sm:hidden">
               <a
                 href={selectedProduct.walmartLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 text-center rounded-xl text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] flex items-center justify-center gap-3 relative overflow-hidden"
+                className="block w-full bg-gradient-to-r from-logo-green to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 text-center rounded-xl text-base transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
               >
-                {/* Button glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-600/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                <ShoppingCart className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">Buy Now on Walmart</span>
-                <ExternalLink className="w-4 h-4 relative z-10" />
+                <ShoppingCart className="w-4 h-4" />
+                <span>Buy from Walmart - {calculatePricing(selectedProduct.price).salePrice}</span>
               </a>
-
-              {/* Additional trust signals */}
-              <div className="flex items-center justify-center gap-4 mt-3 text-xs text-gray-600">
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-logo-green" />
-                  Free Shipping
-                </div>
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-logo-green" />
-                  Secure Checkout
-                </div>
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-logo-green" />
-                  Easy Returns
-                </div>
-              </div>
             </div>
           </div>
         </div>
