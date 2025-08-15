@@ -605,6 +605,20 @@ export default function Index() {
             </p>
           </div>
 
+          {/* Call to action for videos */}
+          <div className="text-center mb-6 sm:mb-8">
+            <a
+              href="https://tiktok.com/@nut.cravings"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <Play className="w-4 h-4" />
+              Follow us on TikTok
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
           <div className="flex flex-col lg:flex-row justify-center items-start gap-8 lg:gap-12 max-w-6xl mx-auto">
             {/* First TikTok Video */}
             <div
