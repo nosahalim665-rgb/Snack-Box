@@ -638,9 +638,16 @@ export default function Index() {
                           Save {((parseFloat(pricing.regularPrice.replace('$', '')) - parseFloat(pricing.salePrice.replace('$', ''))) / parseFloat(pricing.regularPrice.replace('$', '')) * 100).toFixed(0)}%
                         </span>
                       </div>
-                      <span className="text-xs text-white font-semibold bg-logo-green px-2 py-0.5 rounded-full">
-                        {product.size}
-                      </span>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="text-xs text-white font-semibold bg-logo-green px-2 py-0.5 rounded-full">
+                          {product.size}
+                        </span>
+                        {product.outOfStock && (
+                          <span className="text-xs text-red-600 font-semibold bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
+                            Out of Stock
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="w-full bg-logo-green text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 group-hover:bg-green-500 transition-colors">
                       <ShoppingCart className="w-3 h-3" />
