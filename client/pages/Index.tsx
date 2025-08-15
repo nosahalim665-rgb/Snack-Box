@@ -881,7 +881,7 @@ export default function Index() {
             </div>
 
             {/* Content Area */}
-            <div className="overflow-y-auto pb-20 sm:pb-4">
+            <div className="overflow-y-auto pb-24 sm:pb-4">
               {/* Full Width Product Image */}
               <div className="relative">
                 <img
