@@ -133,6 +133,27 @@ export default function Index() {
     setSelectedProduct(products[0]);
   };
 
+  // Swipe to close functionality
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isDownSwipe = distance < -100; // Swipe down by more than 100px
+
+    if (isDownSwipe) {
+      setSelectedProduct(null);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY;
