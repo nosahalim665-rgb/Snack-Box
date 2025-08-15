@@ -939,7 +939,7 @@ export default function Index() {
       {selectedProduct && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 fade-in">
           <div
-            className="bg-white rounded-t-3xl sm:rounded-3xl w-full sm:max-w-2xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-2xl slide-up border-t-2 sm:border border-logo-green/20 relative"
+            className="bg-white rounded-t-3xl sm:rounded-3xl w-full sm:max-w-3xl lg:max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl slide-up border-t-2 sm:border border-logo-green/20 relative"
             style={{
               animation: 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
