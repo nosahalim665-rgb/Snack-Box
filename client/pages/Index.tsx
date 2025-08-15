@@ -112,15 +112,26 @@ const products = [
   },
   {
     id: 3,
-    name: "Gift a Snack Chip Variety Snack Box - 52 Count",
+    name: "Gift a Snack 52 Count Snack Box with Variety Snacks, Chips, Crackers, Cookies, Candy",
+    shortName: "Gift a Snack 52 Count Snack Box",
     description:
-      "52-count snack box filled with a diverse variety of sweet and salty treats. Ideal for care packages, corporate gifts, or family movie nights.",
+      "52-count snack box filled with a diverse variety of sweet and salty treats. Beautifully branded high-end packaging perfect for gifts and care packages.",
     size: "52 ct",
     price: "$31.46",
+    rating: 5,
+    reviewCount: 286,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F5ff73d8278224c2ab0b862f059e3802c?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-52-Count-Snack-Box-with-Variety-Snacks-Chips-Crackers-Cookies-Candy/5915077819?classType=VARIANT&athbdg=L1900",
+    bulletPoints: [
+      "Beautifully branded high-end packaging for an impressive gift.",
+      "Convenient individual servings for on-the-go snacking.",
+      "Includes a heartwarming greeting card for a personal touch.",
+      "Spread joy with the perfect gift for adults, teens, and college students.",
+      "Variety assortment of chips, crackers, cookies, and candy.",
+      "Honesty is our main value – some snacks may be replaced for similar or more value."
+    ]
   },
   {
     id: 4,
