@@ -17,10 +17,14 @@ import AutoScrollCarousel from "../components/AutoScrollCarousel";
 const calculatePricing = (salePrice: string) => {
   const salePriceNumeric = parseFloat(salePrice.replace('$', ''));
   // Following the formula: regularPrice = salePrice / 0.3 (since salePrice = regularPrice * 0.3)
-  const regularPriceNumeric = salePriceNumeric / 0.3;
+  const regularPriceCalculated = salePriceNumeric / 0.3;
+
+  // Round up to .99 - get the integer part and add .99
+  const regularPriceRounded = Math.floor(regularPriceCalculated) + 0.99;
+
   return {
     salePrice: salePrice,
-    regularPrice: `$${regularPriceNumeric.toFixed(2)}`
+    regularPrice: `$${regularPriceRounded.toFixed(2)}`
   };
 };
 
