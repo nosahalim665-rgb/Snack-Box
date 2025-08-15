@@ -936,22 +936,45 @@ export default function Index() {
                   </div>
                 </div>
 
-                {/* Collapsible Sections */}
+                {/* Product Description - Always Visible */}
+                <div className="bg-snack-light-gray/50 p-4 rounded-xl mb-4 border border-gray-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-4 h-4 text-logo-green" />
+                    <h5 className="font-semibold text-heading-red">Product Description</h5>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed text-sm">
+                    {selectedProduct.description}
+                  </p>
+                </div>
+
+                {/* Key Features - Always Visible */}
+                <div className="bg-logo-green/5 p-4 rounded-xl mb-4 border border-logo-green/20">
+                  <div className="flex items-center gap-2 mb-3">
+                    <CheckCircle className="w-4 h-4 text-logo-green" />
+                    <h5 className="font-semibold text-heading-red">What's Included</h5>
+                  </div>
+                  <div className="grid grid-cols-1 gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Premium variety of snacks ({selectedProduct.size})
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Beautiful gift packaging
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Greeting card included
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-3 h-3 text-logo-green" />
+                      Individually wrapped snacks
+                    </div>
+                  </div>
+                </div>
+
+                {/* Collapsible Additional Details */}
                 <Accordion type="single" collapsible className="space-y-2">
-                  {/* Product Description */}
-                  <AccordionItem value="description" className="border border-gray-200 rounded-lg">
-                    <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-gray-50">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-logo-green" />
-                        <span className="font-semibold text-heading-red">Product Description</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4">
-                      <p className="text-gray-700 leading-relaxed text-sm">
-                        {selectedProduct.description}
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
 
                   {/* What's Included */}
                   <AccordionItem value="included" className="border border-gray-200 rounded-lg">
