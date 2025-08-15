@@ -752,11 +752,11 @@ export default function Index() {
       {showFloatingButton && (
         <button
           onClick={openFirstProductModal}
-          className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 bg-logo-green hover:bg-green-500 text-white font-bold px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl shadow-xl z-50 transition-all duration-200 transform hover:scale-105 button-enhanced flex items-center gap-1.5 min-h-[36px] min-w-[36px]"
+          className="fixed bottom-4 right-4 sm:bottom-4 sm:right-4 bg-logo-green hover:bg-green-500 text-white font-bold px-4 sm:px-4 py-3 sm:py-2.5 rounded-xl sm:rounded-xl shadow-xl z-50 transition-all duration-200 transform hover:scale-105 button-enhanced flex items-center gap-2 min-h-[56px] sm:min-h-[44px] min-w-[56px] sm:min-w-[44px]"
         >
-          <ShoppingCart className="w-4 h-4" />
+          <ShoppingCart className="w-5 h-5 sm:w-4 sm:h-4" />
           <span className="hidden sm:inline text-sm">Buy Now</span>
-          <span className="sm:hidden text-xs">Buy</span>
+          <span className="sm:hidden text-sm font-semibold">Buy</span>
         </button>
       )}
 
