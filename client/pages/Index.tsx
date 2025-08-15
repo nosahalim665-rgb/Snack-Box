@@ -135,15 +135,24 @@ const products = [
   },
   {
     id: 4,
-    name: "Gift A Snack Snack Box Care Package - 105 Count",
+    name: "Ultimate Snack Box Variety Pack – 105 Count by Gift A Snack",
+    shortName: "Ultimate Snack Box – 105 Count",
     description:
-      'Dive into the ultimate snacking experience with the "Gift A Snack" Snack Box Care Package. Our 105-count variety pack brims with a mix of America\'s favorite candies, chips, crackers, and bars, offering something delicious for every craving. Perfectly packaged in individual servings for on-the-go ease, each box also includes a cheerful greeting card to spread extra joy. Thoughtfully presented in a beautifully branded box, this snack pack makes a fantastic gift for adults, teens, college students, or anyone who deserves a special treat. Note: Some snacks may vary but will always be of equal or greater value.',
+      "105-count pack with America's favorite candies, chips, crackers, and bars. Perfectly packaged in individual servings for on-the-go ease and ideal as a gift.",
     size: "105 ct",
     price: "$45.97",
+    rating: 5,
+    reviewCount: 286,
+    outOfStock: true,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2F936b74c9566f406ebebd96074d052d09?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Ultimate-Snack-Box-Variety-Pack-105-Count-by-Gift-A-Snack/14496505954?classType=VARIANT",
+    bulletPoints: [
+      "105-count pack with America's favorite candies, chips, crackers, and bars.",
+      "Perfectly packaged in individual servings for on-the-go ease.",
+      "Ideal gift for adults, teens, college students, or anyone who deserves a treat."
+    ]
   },
 ];
 
