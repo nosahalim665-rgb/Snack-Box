@@ -11,6 +11,9 @@ import {
   CheckCircle,
   ChevronDown,
   ExternalLink,
+  Play,
+  Maximize2,
+  Eye,
 } from "lucide-react";
 import {
   Accordion,
