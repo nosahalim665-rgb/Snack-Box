@@ -87,15 +87,28 @@ const products = [
   },
   {
     id: 2,
-    name: "Gift a Snack Chip Variety Snack Box - 42 Count",
+    name: "Gift a Snack Chip Variety Snack Box – Snack Pack Variety Box, 42 Count",
+    shortName: "Gift a Snack Chip Variety Snack Box",
     description:
-      "Includes 42 premium snacks from brands like Airheads, Cheez It, and Famous Amos. Comes in high-end packaging with a greeting card. Great for students, employees, and family members.",
+      "Variety assortment of brands like Airheads, Cheez It, and Famous Amos. Contains 42 individually wrapped treats in high-end packaging with a greeting card.",
     size: "42 ct",
     price: "$23.96",
+    rating: 5,
+    reviewCount: 286,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F79b7dfd5cb0f4ca0b96e836c27c6ef40%2Fcd06d6ab52e341e2b57efd6b128aeeaa?format=webp&width=800",
     walmartLink:
       "https://www.walmart.com/ip/Gift-a-Snack-Chip-Variety-Snack-Box-Snack-Pack-Variety-Box-42-Count/5298521902?classType=VARIANT&athbdg=L1600",
+    bulletPoints: [
+      "Contains 42 individually wrapped treats including chips, crackers, cookies, and candy.",
+      "Variety assortment of brands like Airheads, Cheez It, and Famous Amos.",
+      "Includes a heartwarming greeting card.",
+      "Packed in high-end packaging for an impressive gift.",
+      "Ideal for adults, teens, and college students.",
+      "Suitable for on-the-go snacking.",
+      "Some snacks may be replaced with similar or higher value items.",
+      "Perfect as a care package or a convenient snack option."
+    ]
   },
   {
     id: 3,
