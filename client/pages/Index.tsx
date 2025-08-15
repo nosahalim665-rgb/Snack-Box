@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   X,
   Truck,
@@ -9,7 +9,15 @@ import {
   Sparkles,
   Zap,
   CheckCircle,
+  ChevronDown,
+  ExternalLink,
 } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import AutoScrollCarousel from "../components/AutoScrollCarousel";
 
